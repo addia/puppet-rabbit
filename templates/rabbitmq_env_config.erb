@@ -1,0 +1,22 @@
+#  ______________________________________
+# / NOTE: This file is managed by Puppet \
+# \ - do not change it here, ever!       /
+#  --------------------------------------
+#         \   ^__^
+#          \  (OO)\_______
+#             (__)\       )\/\
+#                 ||----w |
+#                 ||     ||
+#
+# ----------------------------------------
+#
+#
+# RabbitMQ Configuration File
+#
+<% if @ssl -%>
+NODE_PORT=<%= @ssl_port %>
+<% else -%>
+NODE_PORT=<%= @default_port %>
+<% end -%>
+PID_FILE=/run/rabbitmq/pid
+NODENAME=rabbit@<%= @hostname %>

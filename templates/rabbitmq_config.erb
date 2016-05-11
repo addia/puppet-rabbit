@@ -1,0 +1,79 @@
+% -*- mode: erlang -*-
+% ______________________________________
+% / NOTE: This file is managed by Puppet \
+% \ - do not change it here, ever!       /
+%  --------------------------------------
+%         \   ^__^
+%          \  (OO)\_______
+%             (__)\       )\/\
+%                 ||----w |
+%                 ||     ||
+%
+% ----------------------------------------
+%
+%
+% <%= @module_name %> Configuration File 
+% See http://www.rabbitmq.com/configure.html for details.
+%
+[
+  {rabbit, [
+<% if @config_cluster -%>
+    {cluster_nodes, {[<%= @cluster_nodes.map { |n| "\'rabbit@#{n}\'" }.join(', ') %>], <%= @cluster_node_type %>}},
+    {cluster_partition_handling, <%= @cluster_partition_handling %>},
+<% end -%>
+    {tcp_listen_options, [{keepalive, true}]},
+    {tcp_listeners, []},
+    {ssl_listeners, [<%= @ssl_port %>]},
+    {ssl_options, [{certfile, "<%= @ssl_cert %>"},
+                   {keyfile, "<%= @ssl_key %>"},
+                   {verify, <%= @ssl_verify %>},
+                   {fail_if_no_peer_cert, <%= @ssl_fail_if_no_peer_cert %>}]}
+  ]},
+<% if @config_variables -%>
+<%- @config_variables.keys.sort.each do |key| -%>
+    {<%= key %>, <%= @config_variables[key] %>},
+<%- end -%>
+<%- end -%>
+
+<% if @config_admin -%>
+  {rabbitmq_management, [
+    {listener, [
+      {port, <%= @ssl_management_port %>},
+      {ssl, true},
+      {ssl_opts, [{certfile, "<%= @ssl_cert %>"},
+                  {keyfile, "<%= @ssl_key %>"}]}
+    ]}
+  ]},
+<% end -%>
+
+<% if @config_shovel -%>
+  {rabbit_shovel, [
+    {shovels, [
+      {<%= @config_shovel_name %>, [
+        {sources, [{brokers,
+                     ["amqp://<%= @default_user %>:<%= @default_pass %>@<%= @cluster_master %>.<%= @rabbit_domain %>/<%= @default_vhost %>",
+                      "amqp://<%= @default_user %>:<%= @default_pass %>@<%= @rabbit_shovel_dest %>/<%= @default_vhost %>"]},
+                   {declarations,
+                     ['queue.declare',
+                       {'queue.bind',
+                         [{exchange, <<"<%= @logging_exchange %>">>},
+                          {queue,    <<"<%= @logging_queue %>">>}]}]}]},
+        {destinations, [{broker, "amqp://"},
+                         {declarations,
+                           [{'exchange.declare',
+                             [{exchange, <<"<%= @logging_exchange %>">>},
+                               {type, <<"direct">>}, durable]}]}]},
+        {queue, <<"<%= @logging_queue %>">>},
+        {qos, 10},
+        {auto_ack, false},
+        {tx_size, 0},
+        {delivery_mode, keep},
+        {publish_fields, [{exchange, <<"<%= @logging_exchange %>">>},
+                           {routing_key, <<"<%= @logging_key %>">>}]},
+        {reconnect, 5}
+      ]}
+    ]}
+  ]}
+<% end -%>
+].
+% EOF

@@ -1,0 +1,33 @@
+# ______________________________________
+# / NOTE: This file is managed by Puppet \
+# \ - do not change it here, ever!       /
+#  --------------------------------------
+#         \   ^__^
+#          \  (OO)\_______
+#             (__)\       )\/\
+#                 ||----w |
+#                 ||     ||
+#
+# ----------------------------------------
+#
+#
+# rabbitmqadmin Configuration File 
+#
+[host_normal]
+hostname = <%= @fqdn %>
+<% if @ssl_admin -%>
+port = <%= @ssl_management_port %>
+<% else -%>
+port = <%= @admin_port %>
+<% end -%>
+<% if @ssl -%>
+ssl = True
+<% else -%>
+ssl = False
+<% end -%>
+ssl_key_file = <%= @ssl_ckey %>
+ssl_cert_file = <%= @ssl_ccert %>
+username = <%= @default_user %>
+password = <%= @default_pass %>
+declare_vhost = / # Used as default for declare / delete only
+vhost = /         # Used as default for declare / delete / list

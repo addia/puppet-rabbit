@@ -1,0 +1,15 @@
+[Unit]
+Description=RabbitMQ broker
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=rabbitmq
+Group=rabbitmq
+PIDFile=/run/rabbitmq/pid
+WorkingDirectory=/var/lib/rabbitmq
+ExecStart=/usr/lib/rabbitmq/bin/rabbitmq-server
+ExecStop=/usr/lib/rabbitmq/bin/rabbitmqctl stop
+
+[Install]
+WantedBy=multi-user.target
