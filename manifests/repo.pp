@@ -9,7 +9,7 @@
 #
 # ===========================
 #
-class rabbit::repo {
+class rabbit::repo (
   $package_name       = $rabbit::params::package_name,
   ) inherits rabbit::params {
 
