@@ -159,7 +159,7 @@ class rabbit::config (
     mode              => '0644',
     content           => hiera('elk_stack_rabbitmq_server_key')
   }
-0
+
   file { $ssl_cert:
     ensure            => file,
     owner             => $user,
