@@ -45,6 +45,7 @@ class rabbit::config (
   $file_limit                       = $rabbit::params::file_limit,
   $config_cluster                   = $rabbit::params::config_cluster,
   $cluster_node_type                = $rabbit::params::cluster_node_type,
+  $cluster_data_nic                 = $rabbit::params::cluster_data_nic,
   $cluster_master                   = $rabbit::params::cluster_master,
   $cluster_nodes                    = $rabbit::params::cluster_nodes,
   $cluster_partition_handling       = $rabbit::params::cluster_partition_handling,
@@ -61,17 +62,18 @@ class rabbit::config (
   notify { "## --->>> configuring the hosts names: ${package_name}": }
 
   $rabbit_hostname                  = $::hostname
-  $rabbit_address                   = $::ipaddress_eth0
+  $rabbit_address                   = $::ipaddress_${cluster_data_nic}
   $rabbit_domain                    = $::domain
 
-  file { '/etc/hosts':
-    ensure            => 'present',
-    owner             => 'root',
-    group             => 'root',
-    mode              => '0644',
-    replace           => false,
-    source            => "puppet:///modules/rabbit/hosts",
-  } ~>
+# not now !!!
+# file { '/etc/hosts':
+#   ensure            => 'present',
+#   owner             => 'root',
+#   group             => 'root',
+#   mode              => '0644',
+#   replace           => false,
+#   source            => "puppet:///modules/rabbit/hosts",
+# } ~>
 
   host { "${rabbit_hostname}.${rabbit_domain}":
     ensure            => 'present',

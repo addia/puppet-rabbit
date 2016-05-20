@@ -45,6 +45,7 @@ class rabbit::params {
   $erlang_cookie                    = hiera('elk_stack_rabbitmq_cookie')
   $erlang_cookie_file               = "/var/lib/rabbitmq/.erlang.cookie"
   $cluster_node_type                = 'disc'
+  $cluster_data_nic                 = hiera('elk_stack_rabbitmq_data_nic')
   $cluster_master                   = hiera('elk_stack_rabbitmq_master')
   $cluster_nodes                    = hiera('elk_stack_rabbitmq_servers')
   $cluster_partition_handling       = 'ignore'
