@@ -62,7 +62,7 @@ class rabbit::config (
   notify { "## --->>> configuring the hosts names: ${package_name}": }
 
   $rabbit_hostname                  = $::hostname
-  $rabbit_address                   = $::ipaddress_${cluster_data_nic}
+  $rabbit_address                   = $::ipaddress_eth1
   $rabbit_domain                    = $::domain
 
 # not now !!!
