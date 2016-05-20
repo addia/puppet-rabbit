@@ -40,7 +40,7 @@ class rabbit::plugins (
     owner             => 'root',
     group             => 'root',
     mode              => '0755',
-    source            => "puppet:///modules/rabbit/${admin_tool}-${version}-${patch}"
+    source            => "puppet:///modules/rabbit/${admin_tool}-${version}${patch}"
   }
 
 }
