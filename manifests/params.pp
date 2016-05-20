@@ -22,7 +22,7 @@ class rabbit::params {
   $repo_gpg_key                     = 'http://www.rabbitmq.com/rabbitmq-signing-key-public.asc'
   $service_name                     = "${package_name}.service"
   $systemd_file                     = "/usr/lib/systemd/system/${service_name}"
-  $service_file                     = "/usr/lib/systemd/system/${service_name}.service"
+  $service_file                     = "/usr/lib/systemd/system/${service_name}"
 
   $rabbit_shovel_dest               = hiera('elk_stack_rabbitmq_address')
   $ssl_server_key                   = "rabbitmq-server.key"
