@@ -31,8 +31,8 @@ class rabbit::plugins (
   } ~>
 
   exec { 'Loading the plug-ins' :
-    command           => "service $package_name restart",
-    path              => "/usr/local/bin/:/bin/:/sbin/",
+    command           => "systemctl restart ${package_name}",
+    path              => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   }
 
   file { $admin_tool_dir/$admin_tool:
