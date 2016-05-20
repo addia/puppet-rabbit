@@ -35,7 +35,7 @@ class rabbit::plugins (
     path              => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   }
 
-  file { $admin_tool_dir/$admin_tool:
+  file { ${admin_tool_dir}/${admin_tool}:
     ensure            => present,
     owner             => 'root',
     group             => 'root',
