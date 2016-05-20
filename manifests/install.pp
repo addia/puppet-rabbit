@@ -34,8 +34,6 @@ class rabbit::install (
 
   selinux::module { 'rabbitmq':
     ensure              => 'present',
-    prefix              => 'se_',
-    sx_mod_dir          => '/usr/share/selinux',
     source              => 'puppet:///modules/rabbit/rabbitmq_local.te'
   } ~>
 
