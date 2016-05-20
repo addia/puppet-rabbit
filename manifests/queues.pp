@@ -57,9 +57,9 @@ class rabbit::queues (
     password                        => $default_pass,
     type                            => 'topic',
     ensure                          => $ensure,
-    internal                        => false,
-    auto_delete                     => false,
-    durable                         => true,
+    #internal                        => false,
+    #auto_delete                     => false,
+    #durable                         => true,
   } ~>
 
   rabbitmq_queue { "${logging_queue}@${default_vhost}":
