@@ -35,9 +35,9 @@ class rabbit::params {
   $config_adm_file                  = '/etc/rabbitmq/rabbitmqadmin.conf'
   $limits_file                      = '/etc/security/limits.d/30-rabbit.conf'
   $tmpfile                          = '/usr/lib/tmpfiles.d/rabbitmq.conf'
-  $config_cluster                   = true
+  $config_cluster                   = false
   $config_admin                     = true
-  $config_shovel                    = true
+  $config_shovel                    = false
   $config_shovel_name               = "bunny_shovel"
   $config_shovel_statics            = {}
   $admin_tool                       = 'rabbitmqadmin'
