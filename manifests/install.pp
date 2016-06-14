@@ -19,7 +19,7 @@ class rabbit::install (
 
   notify { "## --->>> Installing default packages for: ${package_name}": }
 
-  $rabbits = ['erlang', 'java-1.8.0-openjdk', 'java-1.8.0-openjdk-devel' ,'selinux-policy-devel']
+  $rabbits = ['java-1.8.0-openjdk', 'java-1.8.0-openjdk-devel' ,'selinux-policy-devel']
   package { $rabbits:
      ensure             => $ensure,
      } ~>
