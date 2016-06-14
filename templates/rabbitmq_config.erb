@@ -43,10 +43,10 @@
       {ssl_opts, [{certfile, "<%= @ssl_cert %>"},
                   {keyfile, "<%= @ssl_key %>"}]}
     ]}
-  ]},
 <% end -%>
 
 <% if @config_shovel -%>
+  ]},
   {rabbit_shovel, [
     {shovels, [
       {<%= @config_shovel_name %>, [
@@ -73,6 +73,8 @@
         {reconnect, 5}
       ]}
     ]}
+  ]}
+<% else -%>
   ]}
 <% end -%>
 ].
