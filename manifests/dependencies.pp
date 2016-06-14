@@ -25,7 +25,8 @@ class rabbit::dependencies (
 
   notify { "## --->>> Installing release 'R16B-03.17' patches for Erlang ": }
   package { 'erlang':
-     ensure             => $ensure,
+     provider           => 'yum',
+     ensure             => 'R16B-03.17.el7',
      install_options    => ['--enablerepo', 'epel-testing'],
      }
 
