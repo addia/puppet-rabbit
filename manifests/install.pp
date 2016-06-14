@@ -24,6 +24,11 @@ class rabbit::install (
      ensure             => $ensure,
      } ~>
 
+  notify { "## --->>> Installing release 'R16B-03.17' patches for Erlang ": }
+  package { 'erlang':
+     install_options    => ['--enablerepo', 'epel-testing'],
+     } ~>
+
   notify { "## --->>> Installing package: ${package_name}-${version}${patch}": } ~>
 
   package { "${package_name}-${version}${patch}" :
