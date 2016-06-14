@@ -37,7 +37,7 @@ class rabbit::install (
     source              => "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm",
   } ~>
 
-  selinux::module { 'rabbitmq':
+  selinux::module { 'rabbitmq_local':
     ensure              => 'present',
     source              => 'puppet:///modules/rabbit/rabbitmq_local.te'
   } ~>
