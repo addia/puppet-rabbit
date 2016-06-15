@@ -14,14 +14,18 @@ class rabbit::config (
   $group                            = $rabbit::params::group,
   $ssl_server_key                   = $rabbit::params::ssl_server_key,
   $ssl_server_crt                   = $rabbit::params::ssl_server_crt,
+  $ssl_server_pem                   = $rabbit::params::ssl_server_pem,
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
+  $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_dir                          = $rabbit::params::ssl_dir,
   $ssl_cert                         = $rabbit::params::ssl_cert,
   $ssl_key                          = $rabbit::params::ssl_key,
+  $ssl_pem                          = $rabbit::params::ssl_pem,
   $ssl_ccert                        = $rabbit::params::ssl_ccert,
   $ssl_ckey                         = $rabbit::params::ssl_ckey,
+  $ssl_cpem                         = $rabbit::params::ssl_cpem,
   $ssl_verify                       = $rabbit::params::ssl_verify,
   $ssl_fail_if_no_peer_cert         = $rabbit::params::ssl_fail_if_no_peer_cert,
   $ssl_management_port              = $rabbit::params::ssl_management_port,
@@ -167,6 +171,14 @@ class rabbit::config (
     content           => hiera('elk_stack_rabbitmq_server_key')
   }
 
+  file { $ssl_pem:
+    ensure            => file,
+    owner             => $user,
+    group             => $group,
+    mode              => '0644',
+    content           => hiera('elk_stack_rabbitmq_server_pem')
+  }
+
   file { $ssl_cert:
     ensure            => file,
     owner             => $user,
@@ -181,6 +193,14 @@ class rabbit::config (
     group             => $group,
     mode              => '0644',
     content           => hiera('elk_stack_rabbitmq_client_key')
+  }
+
+  file { $ssl_cpem:
+    ensure            => file,
+    owner             => $user,
+    group             => $group,
+    mode              => '0644',
+    content           => hiera('elk_stack_rabbitmq_client_pem')
   }
 
   file { $ssl_ccert:

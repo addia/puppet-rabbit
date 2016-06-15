@@ -27,8 +27,10 @@ class rabbit::params {
   $rabbit_shovel_dest               = hiera('elk_stack_rabbitmq_address')
   $ssl_server_key                   = "rabbitmq-server.key"
   $ssl_server_crt                   = "rabbitmq-server.crt"
+  $ssl_server_pem                   = "rabbitmq-server.pem"
   $ssl_client_key                   = "rabbitmq-client.key"
   $ssl_client_crt                   = "rabbitmq-client.crt"
+  $ssl_client_pem                   = "rabbitmq-client.pem"
 
   $config_file                      = '/etc/rabbitmq/rabbitmq.config'
   $config_env_file                  = '/etc/rabbitmq/rabbitmq-env.conf'
@@ -63,8 +65,10 @@ class rabbit::params {
   $ssl                              = true
   $ssl_only                         = true
   $ssl_dir                          = "/etc/rabbitmq/ssl"
+  $ssl_pem                          = "${ssl_dir}/${ssl_server_pem}"
   $ssl_cert                         = "${ssl_dir}/${ssl_server_crt}"
   $ssl_key                          = "${ssl_dir}/${ssl_server_key}"
+  $ssl_cpem                         = "${ssl_dir}/${ssl_client_pem}"
   $ssl_ccert                        = "${ssl_dir}/${ssl_client_crt}"
   $ssl_ckey                         = "${ssl_dir}/${ssl_client_key}"
   $ssl_port                         = '5671'
