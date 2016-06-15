@@ -59,21 +59,26 @@ class rabbit::config (
   $config_management_variables      = $rabbit::params::config_management_variables
   ) inherits rabbit::params {
 
-  notify { "## --->>> configuring the hosts names: ${package_name}": }
+  notify { "## --->>> fixing and configuring the hosts names: ${package_name}": }
 
   $rabbit_hostname                  = $::hostname
   $rabbit_address                   = $::ipaddress_eth1
   $rabbit_domain                    = $::domain
 
-# not now !!!
-# file { '/etc/hosts':
-#   ensure            => 'present',
-#   owner             => 'root',
-#   group             => 'root',
-#   mode              => '0644',
-#   replace           => false,
-#   source            => "puppet:///modules/rabbit/hosts",
-# } ~>
+  file { '/etc/hosts.fix':
+    ensure            => 'present',
+    owner             => 'root',
+    group             => 'root',
+    mode              => '0644',
+    replace           => false,
+    source            => "puppet:///modules/rabbit/hosts",
+  }
+
+  exec { "fix the hostname pants":
+    command           => "mv /etc/hosts.fix /etc/hosts",
+    onlyif            => "grep '-RMQ-' /etc/hosts"
+    path              => "/sbin:/bin:/usr/sbin:/usr/bin",
+  }
 
   host { "${rabbit_hostname}.${rabbit_domain}":
     ensure            => 'present',
