@@ -76,7 +76,7 @@ class rabbit::config (
 
   exec { "fix the hostname pants":
     command           => "mv /etc/hosts.fix /etc/hosts",
-    onlyif            => "grep '-RMQ-' /etc/hosts",
+    onlyif            => 'grep -- "-RMQ-" /etc/hosts',
     path              => "/sbin:/bin:/usr/sbin:/usr/bin",
   }
 

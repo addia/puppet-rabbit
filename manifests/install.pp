@@ -21,7 +21,8 @@ class rabbit::install (
   package { "${package_name}-${version}${patch}" :
     ensure              => 'installed',
     provider            => 'rpm',
-    source              => "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm",
+    # source            => "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm",
+    source              => "puppet:///modules/rabbit/${package_name}-${version}${patch}.noarch.rpm",
   }
 
   selinux::module { 'rabbitmq_local':

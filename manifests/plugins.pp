@@ -11,6 +11,8 @@
 #
 class rabbit::plugins (
   $ensure             = $rabbit::params::ensure,
+  $user               = $rabbit::params::user,
+  $group              = $rabbit::params::group,
   $admin_tool         = $rabbit::params::admin_tool,
   $admin_tool_dir     = $rabbit::params::admin_tool_dir,
   $version            = $rabbit::params::version,
@@ -25,6 +27,11 @@ class rabbit::plugins (
 
   rabbitmq_plugin { $plugins:
     ensure            => $ensure,
+  } ~>
+
+  exec { 'fixing the plug-in owner' :
+    command           => "chown -R $user:$group /var/lib/rabbitmq",
+    path              => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
   notify { "## --->>> Loading the plug-ins: ${package_name}":
