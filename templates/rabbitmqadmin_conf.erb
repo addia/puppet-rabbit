@@ -13,7 +13,11 @@
 #
 # rabbitmqadmin Configuration File 
 #
+<% if @ssl -%>
+[host_ssl]
+<% else -%>
 [host_normal]
+<% end -%>
 hostname = <%= @fqdn %>
 <% if @ssl_admin -%>
 port = <%= @ssl_management_port %>
@@ -25,8 +29,10 @@ ssl = True
 <% else -%>
 ssl = False
 <% end -%>
+<% if @ssl -%>
 ssl_key_file = <%= @ssl_ckey %>
 ssl_cert_file = <%= @ssl_ccert %>
+<% end -%>
 username = <%= @default_user %>
 password = <%= @default_pass %>
 declare_vhost = / # Used as default for declare / delete only
