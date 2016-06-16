@@ -40,6 +40,7 @@
 #     config_shovel                    = set-up shovel bolean
 #     config_shovel_name               = the shovel name
 #     config_shovel_statics            = shovel stats
+#     admin_help                       = the admin helper script
 #     admin_tool                       = the admin script
 #     admin_tool_dir                   = location for the admin script
 #     erlang_cookie                    = Erlang cookie value
@@ -126,6 +127,7 @@ class rabbit (
   $config_shovel                    = $rabbit::params::config_shovel,
   $config_shovel_name               = $rabbit::params::config_shovel_name,
   $config_shovel_statics            = $rabbit::params::config_shovel_statics,
+  $admin_help                       = $rabbit::params::admin_help,
   $admin_tool                       = $rabbit::params::admin_tool,
   $admin_tool_dir                   = $rabbit::params::admin_tool_dir,
   $erlang_cookie                    = $rabbit::params::erlang_cookie,

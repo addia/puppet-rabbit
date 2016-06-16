@@ -43,6 +43,7 @@ class rabbit::params {
   $config_shovel                    = false
   $config_shovel_name               = "bunny_shovel"
   $config_shovel_statics            = {}
+  $admin_help                       = 'rabbit_admin.sh'
   $admin_tool                       = 'rabbitmqadmin'
   $admin_tool_dir                   = '/usr/local/bin'
   $erlang_cookie                    = hiera('elk_stack_rabbitmq_cookie')

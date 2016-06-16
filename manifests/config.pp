@@ -42,6 +42,8 @@ class rabbit::config (
   $logging_exchange                 = $rabbit::params::logging_exchange,
   $logging_queue                    = $rabbit::params::logging_queue,
   $config_admin                     = $rabbit::params::config_admin,
+  $admin_help                       = $rabbit::params::admin_help,
+  $admin_tool_dir                   = $rabbit::params::admin_tool_dir,
   $admin_port                       = $rabbit::params::admin_port,
   $config_file                      = $rabbit::params::config_file,
   $limits_file                      = $rabbit::params::limits_file,
@@ -100,6 +102,14 @@ class rabbit::config (
     group             => $group,
     mode              => '0644',
     content           => template('rabbit/rabbitmq_env_config.erb'),
+  }
+
+  file { "${admin_tool_dir}/${admin_help}":
+    ensure            => file,
+    owner             => 'root',
+    group             => 'root',
+    mode              => '0755',
+    content           => template('rabbit/rabbit_admin_sh.erb'),
   }
 
   file { $config_adm_file: 

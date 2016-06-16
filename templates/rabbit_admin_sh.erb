@@ -1,0 +1,24 @@
+#!/usr/bin/bash 
+# 
+##
+###  puppet forge rabbitmq is missing half the "required" variables ...
+##
+#
+
+# grab the command line arguments
+# -------------------------------
+COM=$@ 
+
+# now feed rabbitmqadmin with all the "required" variables ...
+# ------------------------------------------------------------
+/usr/local/bin/rabbitmqadmin \ 
+--host=<%= @rabbit_hostname %>  \ 
+--port=<%= @ssl_management_port %>  \ 
+--vhost=<%= @default_vhost %>  \ 
+--username=<%= @default_user %>  \ 
+--password=<%= @default_pass %>  \ 
+--ssl  \ 
+--ssl-key-file=<%= @ssl_ckey %>  \ 
+--ssl-cert-file=<%= @ssl_ccert %>  \ 
+--ssl-ca-cert-file=<%= @ssl_cacert_file %>  \ 
+$COM

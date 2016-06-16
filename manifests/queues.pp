@@ -22,6 +22,10 @@ class rabbit::queues (
   $package_name                     = $rabbit::params::package_name
   ) inherits rabbit::params {
   
+  $exchange                         = "declare exchange name=$logging_exchange type=topic"
+  $queue                            = "declare queue name=$logging_queue durable=true auto_delete=false"
+  $binding                          = "declare binding source=$logging_exchange destination=$logging_queue routing_key=$logging_key destination_type=queue"
+
   notify { "## --->>> Configuring users and queues: ${package_name}":
   } ~>
 
@@ -52,30 +56,19 @@ class rabbit::queues (
     write_permission                => '.*',
   } ~>
 
-  rabbitmq_exchange { "${logging_exchange}@${default_vhost}":
-    user                            => $default_user,
-    password                        => $default_pass,
-    type                            => 'topic',
-    ensure                          => $ensure,
-    internal                        => false,
-    auto_delete                     => false,
-    durable                         => true,
+  exec { 'rabbitmq exchange' :
+    command                         => "rabbit_admin.sh  $exchange",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
-  rabbitmq_queue { "${logging_queue}@${default_vhost}":
-    user                            => $default_user,
-    password                        => $default_pass,
-    durable                         => true,
-    auto_delete                     => false,
-    ensure                          => $ensure,
+  exec { 'rabbitmq queue' :
+    command                         => "rabbit_admin.sh  $queue",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
-  rabbitmq_binding { "${logging_exchange}@${logging_queue}@${default_vhost}":
-    user                            => $default_user,
-    password                        => $default_pass,
-    destination_type                => 'queue',
-    routing_key                     => $logging_key,
-    ensure                          => $ensure,
+  exec { 'rabbitmq binding' :
+    command                         => "rabbit_admin.sh  $binding",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
   notify { "## --->>> Removing the guest user: ${package_name}":
