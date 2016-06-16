@@ -53,6 +53,7 @@ class rabbit::queues (
   } ~>
 
   rabbitmq_exchange { "${logging_exchange}@${default_vhost}":
+    node                            => 'host_ssl',
     user                            => $default_user,
     password                        => $default_pass,
     type                            => 'topic',
