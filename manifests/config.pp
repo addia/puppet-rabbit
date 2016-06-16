@@ -18,6 +18,7 @@ class rabbit::config (
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
   $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
+  $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_dir                          = $rabbit::params::ssl_dir,
   $ssl_cert                         = $rabbit::params::ssl_cert,

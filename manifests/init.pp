@@ -29,6 +29,7 @@
 #     ssl_client_key                   = the rabbitmq-client key file name
 #     ssl_client_crt                   = the rabbitmq-client cert file name
 #     ssl_client_pem                   = the rabbitmq-client pem file name
+#     ssl_cacert_file                  = the elk stack ca cert file
 #     config_file                      = the config file
 #     config_env_file                  = the environment config file
 #     config_adm_file                  = the rabbitmq admin config file
@@ -115,6 +116,7 @@ class rabbit (
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
   $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
+  $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $config_file                      = $rabbit::params::config_file,
   $limits_file                      = $rabbit::params::limits_file,
   $service_file                     = $rabbit::params::service_file,

@@ -31,6 +31,7 @@ class rabbit::params {
   $ssl_client_key                   = "rabbitmq-client.key"
   $ssl_client_crt                   = "rabbitmq-client.crt"
   $ssl_client_pem                   = "rabbitmq-client.pem"
+  $ssl_cacert_file                  = "/etc/pki/ca-trust/source/anchors/elk_ca_cart.crt"
 
   $config_file                      = '/etc/rabbitmq/rabbitmq.config'
   $config_env_file                  = '/etc/rabbitmq/rabbitmq-env.conf'

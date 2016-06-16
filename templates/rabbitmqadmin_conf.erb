@@ -18,7 +18,7 @@
 <% else -%>
 [host_normal]
 <% end -%>
-hostname = <%= @fqdn %>
+hostname = <%= @rabbit_hostname %>
 <% if @ssl_admin -%>
 port = <%= @ssl_management_port %>
 <% else -%>
@@ -32,6 +32,7 @@ ssl = False
 <% if @ssl -%>
 ssl_key_file = <%= @ssl_ckey %>
 ssl_cert_file = <%= @ssl_ccert %>
+ssl_ca_cert_file = <%= @ssl_cacert_file %>
 <% end -%>
 username = <%= @default_user %>
 password = <%= @default_pass %>
