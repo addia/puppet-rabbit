@@ -53,14 +53,13 @@ class rabbit::queues (
   } ~>
 
   rabbitmq_exchange { "${logging_exchange}@${default_vhost}":
-    node                            => 'host_ssl',
     user                            => $default_user,
     password                        => $default_pass,
     type                            => 'topic',
     ensure                          => $ensure,
-    #internal                        => false,
-    #auto_delete                     => false,
-    #durable                         => true,
+    internal                        => false,
+    auto_delete                     => false,
+    durable                         => true,
   } ~>
 
   rabbitmq_queue { "${logging_queue}@${default_vhost}":

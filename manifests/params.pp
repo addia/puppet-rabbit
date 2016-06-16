@@ -31,14 +31,14 @@ class rabbit::params {
   $ssl_client_key                   = "rabbitmq-client.key"
   $ssl_client_crt                   = "rabbitmq-client.crt"
   $ssl_client_pem                   = "rabbitmq-client.pem"
-  $ssl_cacert_file                  = "/etc/pki/ca-trust/source/anchors/elk_ca_cart.crt"
+  $ssl_cacert_file                  = "/etc/pki/ca-trust/source/anchors/elk_ca_cert.crt"
 
   $config_file                      = '/etc/rabbitmq/rabbitmq.config'
   $config_env_file                  = '/etc/rabbitmq/rabbitmq-env.conf'
   $config_adm_file                  = '/etc/rabbitmq/rabbitmqadmin.conf'
   $limits_file                      = '/etc/security/limits.d/30-rabbit.conf'
   $tmpfile                          = '/usr/lib/tmpfiles.d/rabbitmq.conf'
-  $config_cluster                   = false
+  $config_cluster                   = true
   $config_admin                     = true
   $config_shovel                    = false
   $config_shovel_name               = "bunny_shovel"
