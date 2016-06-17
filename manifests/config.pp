@@ -72,15 +72,6 @@ class rabbit::config (
   $rabbit_address                   = $::ipaddress_eth1
   $rabbit_domain                    = $::domain
 
-  file { '/etc/hosts.fix':
-    ensure            => 'present',
-    owner             => 'root',
-    group             => 'root',
-    mode              => '0644',
-    replace           => false,
-    source            => "puppet:///modules/rabbit/hosts",
-  }
-
   exec { "fix the hostname pants":
     command           => "mv /etc/hosts.fix /etc/hosts",
     onlyif            => 'grep -- "-RMQ-" /etc/hosts',
@@ -122,6 +113,7 @@ class rabbit::config (
 
   file { $config_file: 
     ensure            => file,
+    replace           => false,
     owner             => $user,
     group             => $group,
     mode              => '0644',
@@ -146,6 +138,7 @@ class rabbit::config (
 
   file { $erlang_cookie_file:
     ensure            => file,
+    replace           => false,
     owner             => $user,
     group             => $group,
     mode              => '0600',
@@ -225,4 +218,4 @@ class rabbit::config (
 }
 
 
-# vim: set ts=2 sw=2 et :
+# via: set ts=2 sw=2 et :

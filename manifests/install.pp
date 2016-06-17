@@ -38,15 +38,19 @@ class rabbit::install (
     onlyif              => "test -x /etc/rc.d/init.d/${package_name}",
   }
 
-  exec { 'unregister old init script':
-    command             => "systemctl daemon-reload",
-    path                => "/sbin:/bin:/usr/sbin:/usr/bin",
-  }
-
   exec { 'remove old init file':
     command             => "rm -f /etc/rc.d/init.d/${package_name}",
     path                => "/sbin:/bin:/usr/sbin:/usr/bin",
     onlyif              => "test -x /etc/rc.d/init.d/${package_name}",
+  }
+
+  # vmware installs have capital hostnames ... YUK !!!
+  file { '/etc/hosts.fix':
+    ensure              => 'present',
+    owner               => 'root',
+    group               => 'root',
+    mode                => '0644',
+    source              => "puppet:///modules/rabbit/hosts",
   }
 
 }

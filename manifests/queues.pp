@@ -11,6 +11,8 @@
 #
 class rabbit::queues (
   $ensure                           = $rabbit::params::ensure,
+  $user                             = $rabbit::params::user,
+  $group                            = $rabbit::params::group,
   $default_user                     = $rabbit::params::default_user,
   $default_pass                     = $rabbit::params::default_pass,
   $logging_user                     = $rabbit::params::logging_user,
@@ -58,17 +60,29 @@ class rabbit::queues (
 
   exec { 'rabbitmq exchange' :
     command                         => "rabbit_admin.sh  $exchange",
+    creates                         => "/var/lib/rabbitmq/.queues_done",
     path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
   exec { 'rabbitmq queue' :
     command                         => "rabbit_admin.sh  $queue",
+    creates                         => "/var/lib/rabbitmq/.queues_done",
     path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
   exec { 'rabbitmq binding' :
     command                         => "rabbit_admin.sh  $binding",
+    creates                         => "/var/lib/rabbitmq/.queues_done",
     path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
+  } ~>
+
+  # Trap door to only allow queues setup once
+  file { "/var/lib/rabbitmq/.queues_done" :
+    ensure                          => present,
+    content                         => "queues setup completed",
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
   } ~>
 
   notify { "## --->>> Removing the guest user: ${package_name}":

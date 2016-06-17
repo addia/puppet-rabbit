@@ -39,7 +39,17 @@ class rabbit::plugins (
 
   exec { 'Loading the plug-ins' :
     command           => "systemctl restart ${package_name}",
+    creates           => "/var/lib/rabbitmq/.plugins_done",
     path              => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
+  } ~>
+
+  # Trap door to only allow plugin setup once
+  file { "/var/lib/rabbitmq/.plugins_done" :
+    ensure            => present,
+    content           => "plugin setup completed",
+    owner             => $user,
+    group             => $group,
+    mode              => '0644',
   }
 
   file { "${admin_tool_dir}/${admin_tool}":
