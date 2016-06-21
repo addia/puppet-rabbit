@@ -47,7 +47,8 @@
 #     erlang_cookie_file               = file for the cookie
 #     cluster_node_type                = type of cluster (mem or disk)
 #     cluster_data_nic                 = the network interface of the data network
-#     cluster_master                   = name of the closter master
+#     cluster_name                     = name of the rabbitmq cluster
+#     cluster_master                   = name of the cluster master
 #     cluster_nodes                    = names of all nodes
 #     cluster_partition_handling       = how to handle partitions
 #     default_user                     = rabbit user
@@ -134,6 +135,7 @@ class rabbit (
   $erlang_cookie_file               = $rabbit::params::erlang_cookie_file,
   $cluster_node_type                = $rabbit::params::cluster_node_type,
   $cluster_data_nic                 = $rabbit::params::cluster_data_nic,
+  $cluster_name                     = $rabbit::params::cluster_name,
   $cluster_master                   = $rabbit::params::cluster_master,
   $cluster_nodes                    = $rabbit::params::cluster_nodes,
   $cluster_partition_handling       = $rabbit::params::cluster_partition_handling,

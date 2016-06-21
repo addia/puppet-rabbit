@@ -19,6 +19,7 @@ class rabbit::queues (
   $logging_pass                     = $rabbit::params::logging_pass,
   $logging_key                      = $rabbit::params::logging_key,
   $default_vhost                    = $rabbit::params::default_vhost,
+  $cluster_name                     = $rabbit::params::cluster_name,
   $logging_exchange                 = $rabbit::params::logging_exchange,
   $logging_queue                    = $rabbit::params::logging_queue,
   $package_name                     = $rabbit::params::package_name
@@ -61,25 +62,43 @@ class rabbit::queues (
   exec { 'rabbitmq exchange' :
     command                         => "rabbit_admin.sh  $exchange",
     creates                         => "/var/lib/rabbitmq/.queues_done",
-    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin",
   } ~>
 
   exec { 'rabbitmq queue' :
     command                         => "rabbit_admin.sh  $queue",
     creates                         => "/var/lib/rabbitmq/.queues_done",
-    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin",
   } ~>
 
   exec { 'rabbitmq binding' :
     command                         => "rabbit_admin.sh  $binding",
     creates                         => "/var/lib/rabbitmq/.queues_done",
-    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin",
   } ~>
 
   # Trap door to only allow queues setup once
   file { "/var/lib/rabbitmq/.queues_done" :
     ensure                          => present,
     content                         => "queues setup completed",
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+  } ~>
+
+  if $config_cluster {
+    if $cluster_master == $::hostname {
+      exec { 'set the cluster name':
+        command                     => "/sbin/rabbitmqctl set_cluster_name $cluster_name",
+        creates                     => "/var/lib/rabbitmq/.cluster_name_set",
+      } 
+    }
+  } ~>
+
+  # Trap door to only allow cluster_name setup once
+  file { "/var/lib/rabbitmq/.cluster_name_set" :
+    ensure                          => present,
+    content                         => "cluster_name set completed",
     owner                           => $user,
     group                           => $group,
     mode                            => '0644',
