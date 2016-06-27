@@ -1,4 +1,4 @@
-# == Class rabbit::queues
+# == Class rabbit::cluster
 # ===========================
 #
 #
@@ -9,7 +9,7 @@
 #
 # ===========================
 #
-class rabbit::queues (
+class rabbit::cluster (
   $ensure                           = $rabbit::params::ensure,
   $user                             = $rabbit::params::user,
   $group                            = $rabbit::params::group,
