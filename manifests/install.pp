@@ -21,13 +21,12 @@ class rabbit::install (
   package { "${package_name}-${version}${patch}" :
     ensure              => 'installed',
     provider            => 'rpm',
-    # source            => "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm",
-    source              => "puppet:///modules/rabbit/${package_name}-${version}${patch}.noarch.rpm",
+    source              => "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm",
   }
 
-  selinux::module { 'rabbitmq_local':
+  selinux::module { 'rabbitmq':
     ensure              => 'present',
-    source              => 'puppet:///modules/rabbit/rabbitmq_local.te'
+    source              => 'puppet:///modules/rabbit/rabbitmq.te'
   }
 
   notify { "## --->>> removing old sysvinit file instlled by: ${package_name}": }
