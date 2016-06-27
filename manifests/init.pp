@@ -186,6 +186,7 @@ class rabbit (
     class { '::rabbit::service': } ->
     class { '::rabbit::plugins': } ->
     class { '::rabbit::queues': } ->
+    class { '::rabbit::cluster': } ->
     anchor { 'rabbit::end': }
 
 }
