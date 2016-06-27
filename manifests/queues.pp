@@ -84,14 +84,20 @@ class rabbit::queues (
     owner                           => $user,
     group                           => $group,
     mode                            => '0644',
+  } ->
+
+  notify { "## --->>> setting the cluster name: ${package_name}":
+  } ~>
+
+  exec { 'check the cluster name' :
+    command                         => "/sbin/rabbitmqctl cluster_status > /tmp/cluster_status",
   } ~>
 
   if $config_cluster {
-    if $cluster_master == $::hostname {
       exec { 'set the cluster name':
         command                     => "/sbin/rabbitmqctl set_cluster_name $cluster_name",
         creates                     => "/var/lib/rabbitmq/.cluster_name_set",
-      } 
+        unless                      => "grep $cluster_name /tmp/cluster_status 2>/dev/null",
     }
   } ~>
 
