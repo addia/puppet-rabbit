@@ -43,7 +43,7 @@ class rabbit::install (
     onlyif              => "test -x /etc/rc.d/init.d/${package_name}",
   }
 
-  # vmware installs have capital hostnames ... YUK !!!
+  # vmware installs have capital hostnames ... YUK !!! - provide a clean hosts file
   file { '/etc/hosts.fix':
     ensure              => 'present',
     owner               => 'root',

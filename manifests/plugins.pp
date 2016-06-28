@@ -10,7 +10,6 @@
 # ===========================
 #
 class rabbit::plugins (
-  $ensure             = $rabbit::params::ensure,
   $user               = $rabbit::params::user,
   $group              = $rabbit::params::group,
   $admin_tool         = $rabbit::params::admin_tool,
@@ -26,7 +25,7 @@ class rabbit::plugins (
   } ~>
 
   rabbitmq_plugin { $plugins:
-    ensure            => $ensure,
+    ensure            => present,
   } ~>
 
   exec { 'fixing the plug-in owner' :
@@ -57,7 +56,6 @@ class rabbit::plugins (
     owner             => 'root',
     group             => 'root',
     mode              => '0755',
-    # source          => "puppet:///modules/rabbit/${admin_tool}-${version}${patch}",
     source            => "puppet:///modules/rabbit/${admin_tool}",
   }
 
