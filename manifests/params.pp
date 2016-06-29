@@ -40,8 +40,8 @@ class rabbit::params {
   $tmpfile                          = '/usr/lib/tmpfiles.d/rabbitmq.conf'
   $config_cluster                   = true
   $config_admin                     = true
-  $config_shovel                    = false
-  $config_shovel_name               = "bunny_shovel"
+  $config_shovel                    = hiera('elk_stack_rabbitmq_shovelconf')
+  $config_shovel_name               = hiera('elk_stack_rabbitmq_shovelname')
   $config_shovel_statics            = {}
   $admin_help                       = 'rabbit_admin.sh'
   $admin_tool                       = 'rabbitmqadmin'

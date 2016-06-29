@@ -122,6 +122,7 @@ class rabbit::config (
 
   file { $service_file:
     ensure            => file,
+    replace           => false,
     owner             => 'root',
     group             => 'root',
     mode              => '0644',
