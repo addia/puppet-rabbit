@@ -24,7 +24,7 @@ class rabbit::params {
   $systemd_file                     = "/usr/lib/systemd/system/${service_name}"
   $service_file                     = "/usr/lib/systemd/system/${service_name}"
 
-  $rabbit_shovel_dest               = hiera('elk_stack_rabbitmq_address')
+  $rabbit_shovel_dest               = hiera('elk_stack_rabbitmq_shoveldest')
   $ssl_server_key                   = "rabbitmq-server.key"
   $ssl_server_crt                   = "rabbitmq-server.crt"
   $ssl_server_pem                   = "rabbitmq-server.pem"
