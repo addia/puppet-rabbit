@@ -21,11 +21,10 @@ class rabbit::service (
     path                            => "/sbin:/bin:/usr/sbin:/usr/bin",
     } ~>
 
-  service { $package_name:
-    ensure                          => running,
-    enable                          => true,
-    hasrestart                      => true,
-    hasstatus                       => true,
+  exec { 'activate new systemd script':
+    command                         => "systemctl enable ${package_name}",
+    creates                         => "/var/lib/rabbitmq/.service_done",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin",
     } ~>
 
   # Trap door to only allow service setup once
