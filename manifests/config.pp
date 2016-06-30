@@ -92,6 +92,20 @@ class rabbit::config (
 
   notify { "## --->>> Creating config files for: ${package_name}": }
 
+  file { '/var/lib/rabbitmq':
+    ensure            => directory,
+    owner             => $user,
+    group             => $group,
+    mode              => '0755',
+    }
+
+  file { '/run/rabbitmq':
+    ensure            => directory,
+    owner             => $user,
+    group             => $group,
+    mode              => '0755',
+    }
+
   file { $config_env_file: 
     ensure            => file,
     owner             => $user,
@@ -157,13 +171,6 @@ class rabbit::config (
     group             => 'root',
     mode              => '0644',
     source            => "puppet:///modules/rabbit/tmpfiles_rabbitmq.conf",
-    }
-
-  file { '/run/rabbitmq':
-    ensure            => directory,
-    owner             => $user,
-    group             => $group,
-    mode              => '0755',
     }
 
   file { $ssl_dir:
