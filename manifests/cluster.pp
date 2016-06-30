@@ -22,13 +22,11 @@ class rabbit::cluster (
   notify { "## --->>> Configuring the cluster: ${package_name}":
   }
 
-  if $config_cluster {
-      exec { 'set_the_cluster_name' :
-        command                     => "rabbitmqctl set_cluster_name $cluster_name",
-        path                        => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin",
-        creates                     => "/var/lib/rabbitmq/.cluster_name_set",
-        unless                      => "rabbit_admin.sh show overview | grep $cluster_name",
-    }
+  exec { 'set_the_cluster_name' :
+    command                         => "rabbitmqctl set_cluster_name $cluster_name",
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin",
+    creates                         => "/var/lib/rabbitmq/.cluster_name_set",
+    unless                          => "rabbit_admin.sh show overview | grep $cluster_name",
   }
 
   # Trap door to only allow cluster_name setup once
