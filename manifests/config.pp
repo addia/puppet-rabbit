@@ -99,6 +99,13 @@ class rabbit::config (
     mode              => '0755',
     }
 
+  file { '/var/log/rabbitmq':
+    ensure            => directory,
+    owner             => $user,
+    group             => $group,
+    mode              => '0755',
+    }
+
   file { '/run/rabbitmq':
     ensure            => directory,
     owner             => $user,
