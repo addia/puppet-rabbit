@@ -91,7 +91,7 @@ class rabbit::queues (
 
   exec { 'Removing the guest user' :
     command                         => "/sbin/rabbitmqctl delete_user guest",
-    onlyif                          => "/usr/local/bin/rabbit_admin.sh list wabbit | grep guest",
+    onlyif                          => "/usr/local/bin/rabbit_admin.sh list users | grep guest",
     creates                         => "/var/lib/rabbitmq/.deleted_guest",
     path                            => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin",
     } ~>
