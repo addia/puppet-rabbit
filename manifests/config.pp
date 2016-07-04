@@ -92,6 +92,13 @@ class rabbit::config (
 
   notify { "## --->>> Creating config files for: ${package_name}": }
 
+  file { '/etc/rabbitmq':
+    ensure            => directory,
+    owner             => $user,
+    group             => $group,
+    mode              => '0755',
+    }
+
   file { '/var/lib/rabbitmq':
     ensure            => directory,
     owner             => $user,
