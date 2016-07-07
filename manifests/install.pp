@@ -31,7 +31,7 @@ class rabbit::install (
   }
 
   selinux::port { 'allow_rabbitadmin_port':
-    context                => 'rabbitmq_t',
+    context                => 'rabbitmq_port_t',
     port                   => $ssl_management_port,
     protocol               => 'tcp',
     }
