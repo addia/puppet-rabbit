@@ -29,6 +29,8 @@
 #     ssl_client_key                   = the rabbitmq-client key file name
 #     ssl_client_crt                   = the rabbitmq-client cert file name
 #     ssl_client_pem                   = the rabbitmq-client pem file name
+#     ssl_shovel_key                   = the rabbitmq-shovel key file name
+#     ssl_shovel_crt                   = the rabbitmq-shovel cert file name
 #     ssl_cacert_file                  = the elk stack ca cert file
 #     config_file                      = the config file
 #     config_env_file                  = the environment config file
@@ -71,6 +73,8 @@
 #     ssl_ccert                        = ssl client cert
 #     ssl_ckey                         = ssl client key
 #     ssl_cpem                         = ssl client pem
+#     ssl_scert                        = ssl shovel cert
+#     ssl_skey                         = ssl shovel key
 #     ssl_port                         = port for ssl
 #     ssl_interface                    = ssl interface port
 #     ssl_management_port              = ssl management port
@@ -118,6 +122,8 @@ class rabbit (
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
   $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
+  $ssl_shovel_key                   = $rabbit::params::ssl_shovel_key,
+  $ssl_shovel_crt                   = $rabbit::params::ssl_shovel_crt,
   $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $config_file                      = $rabbit::params::config_file,
   $limits_file                      = $rabbit::params::limits_file,
@@ -160,6 +166,8 @@ class rabbit (
   $ssl_ccert                        = $rabbit::params::ssl_ccert,
   $ssl_ckey                         = $rabbit::params::ssl_ckey,
   $ssl_cpem                         = $rabbit::params::ssl_cpem,
+  $ssl_scert                        = $rabbit::params::ssl_scert,
+  $ssl_skey                         = $rabbit::params::ssl_skey,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_interface                    = $rabbit::params::ssl_interface,
   $ssl_management_port              = $rabbit::params::ssl_management_port,

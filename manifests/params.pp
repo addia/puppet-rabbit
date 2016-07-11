@@ -31,6 +31,8 @@ class rabbit::params {
   $ssl_client_key                   = "rabbitmq-client.key"
   $ssl_client_crt                   = "rabbitmq-client.crt"
   $ssl_client_pem                   = "rabbitmq-client.pem"
+  $ssl_shovel_key                   = "rabbitmq-shovel.key"
+  $ssl_shovel_crt                   = "rabbitmq-shovel.crt"
   $ssl_cacert_file                  = "/etc/pki/ca-trust/source/anchors/elk_ca_cert.crt"
 
   $config_file                      = '/etc/rabbitmq/rabbitmq.config'
@@ -74,6 +76,8 @@ class rabbit::params {
   $ssl_cpem                         = "${ssl_dir}/${ssl_client_pem}"
   $ssl_ccert                        = "${ssl_dir}/${ssl_client_crt}"
   $ssl_ckey                         = "${ssl_dir}/${ssl_client_key}"
+  $ssl_scert                        = "${ssl_dir}/${ssl_shovel_crt}"
+  $ssl_skey                         = "${ssl_dir}/${ssl_shovel_key}"
   $ssl_port                         = '5671'
   $ssl_interface                    = 'UNSET'
   $ssl_management_port              = '15671'

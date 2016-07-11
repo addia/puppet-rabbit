@@ -18,6 +18,8 @@ class rabbit::config (
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
   $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
+  $ssl_shovel_key                   = $rabbit::params::ssl_shovel_key,
+  $ssl_shovel_crt                   = $rabbit::params::ssl_shovel_crt,
   $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_dir                          = $rabbit::params::ssl_dir,
@@ -27,6 +29,8 @@ class rabbit::config (
   $ssl_ccert                        = $rabbit::params::ssl_ccert,
   $ssl_ckey                         = $rabbit::params::ssl_ckey,
   $ssl_cpem                         = $rabbit::params::ssl_cpem,
+  $ssl_scert                        = $rabbit::params::ssl_scert,
+  $ssl_skey                         = $rabbit::params::ssl_skey,
   $ssl_verify                       = $rabbit::params::ssl_verify,
   $ssl_fail_if_no_peer_cert         = $rabbit::params::ssl_fail_if_no_peer_cert,
   $ssl_management_port              = $rabbit::params::ssl_management_port,
@@ -202,20 +206,20 @@ class rabbit::config (
     content           => hiera('elk_stack_rabbitmq_server_key')
     }
 
-  file { $ssl_pem:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_server_pem')
-    }
-
   file { $ssl_cert:
     ensure            => file,
     owner             => $user,
     group             => $group,
     mode              => '0644',
     content           => hiera('elk_stack_rabbitmq_server_cert')
+    }
+
+  file { $ssl_pem:
+    ensure            => file,
+    owner             => $user,
+    group             => $group,
+    mode              => '0644',
+    content           => hiera('elk_stack_rabbitmq_server_pem')
     }
 
   file { $ssl_ckey:
@@ -226,20 +230,36 @@ class rabbit::config (
     content           => hiera('elk_stack_rabbitmq_client_key')
     }
 
-  file { $ssl_cpem:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_client_pem')
-    }
-
   file { $ssl_ccert:
     ensure            => file,
     owner             => $user,
     group             => $group,
     mode              => '0644',
     content           => hiera('elk_stack_rabbitmq_client_cert')
+    }
+
+  file { $ssl_skey:
+    ensure            => file,
+    owner             => $user,
+    group             => $group,
+    mode              => '0644',
+    content           => hiera('elk_stack_rabbitmq_shovel_key')
+    }
+
+  file { $ssl_scert:
+    ensure            => file,
+    owner             => $user,
+    group             => $group,
+    mode              => '0644',
+    content           => hiera('elk_stack_rabbitmq_shovel_cert')
+    }
+
+  file { $ssl_cpem:
+    ensure            => file,
+    owner             => $user,
+    group             => $group,
+    mode              => '0644',
+    content           => hiera('elk_stack_rabbitmq_client_pem')
     }
 
   }
