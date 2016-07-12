@@ -75,6 +75,7 @@ class rabbit::config (
 
   notify { "## --->>> fixing and configuring the hosts names: ${package_name}": }
 
+  $rabbitmq_master                  = false
   $rabbit_hostname                  = $::hostname
   $rabbit_domain                    = $::domain
   if $cluster_data_nic == 'eth0' {
@@ -82,13 +83,6 @@ class rabbit::config (
     }
   if $cluster_data_nic == 'eth1' {
     $rabbit_address                 = $::ipaddress_eth1
-    }
-
-  if $rabbit_hostname == $cluster_master {
-    $rabbitmq_master                = true
-    }
-  else {
-    $rabbitmq_master                = false
     }
 
   exec { "fix the hostname pants":

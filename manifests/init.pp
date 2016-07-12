@@ -199,6 +199,7 @@ class rabbit (
     class { '::rabbit::plugins': } ->
     class { '::rabbit::queues': } ->
     class { '::rabbit::cluster': } ->
+    class { '::rabbit::shovel': } ->
     anchor { 'rabbit::end': }
 
 }
