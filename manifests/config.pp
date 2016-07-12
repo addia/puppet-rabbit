@@ -100,10 +100,12 @@ class rabbit::config (
   notify { "## --->>> Creating config files for: ${package_name}": }
 
   if $config_shovel {
-    if exists("/var/lib/rabbitmq/.plugins_done") {
+    if exists('/var/lib/rabbitmq/.plugins_done') {
+      warning( 'this should be true ... ' )
       $rabbitmq_master              = true
       }
     else {
+      warning( 'this is false, really?  ... ' )
       $rabbitmq_master              = false
       }
     }
