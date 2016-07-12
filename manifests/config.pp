@@ -75,7 +75,6 @@ class rabbit::config (
 
   notify { "## --->>> fixing and configuring the hosts names: ${package_name}": }
 
-  $rabbitmq_master                  = false
   $rabbit_hostname                  = $::hostname
   $rabbit_domain                    = $::domain
   if $cluster_data_nic == 'eth0' {
@@ -99,6 +98,15 @@ class rabbit::config (
     }
 
   notify { "## --->>> Creating config files for: ${package_name}": }
+
+  if $config_shovel {
+    if exists("/var/lib/rabbitmq/.plugins_done") {
+      $rabbitmq_master              = true
+      }
+    else {
+      $rabbitmq_master              = false
+      }
+    }
 
   file { '/etc/rabbitmq':
     ensure                          => directory,
