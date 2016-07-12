@@ -97,7 +97,7 @@ class rabbit::config (
     host_aliases                    => [$rabbit_hostname, 'rabbit']
     }
 
-  notify { "## --->>> Creating config files for: ${package_name}": }
+  notify { "## --->>> Preparing the shovel config variables for: ${package_name}": }
 
   if $config_shovel {
     if exists('/var/lib/rabbitmq/.plugins_done') {
@@ -109,6 +109,8 @@ class rabbit::config (
       $rabbitmq_master              = false
       }
     }
+
+  notify { "## --->>> Creating config files for: ${package_name}": }
 
   file { '/etc/rabbitmq':
     ensure                          => directory,
