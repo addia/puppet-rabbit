@@ -24,7 +24,6 @@ class rabbit::params {
   $systemd_file                     = "/usr/lib/systemd/system/${service_name}"
   $service_file                     = "/usr/lib/systemd/system/${service_name}"
 
-  $rabbit_shovel_dest               = hiera('elk_stack_rabbitmq_shoveldest')
   $ssl_server_key                   = "rabbitmq-server.key"
   $ssl_server_crt                   = "rabbitmq-server.crt"
   $ssl_server_pem                   = "rabbitmq-server.pem"
@@ -42,9 +41,11 @@ class rabbit::params {
   $tmpfile                          = '/usr/lib/tmpfiles.d/rabbitmq.conf'
   $config_cluster                   = true
   $config_admin                     = true
-  $config_shovel                    = hiera('elk_stack_rabbitmq_shovelconf')
-  $config_shovel_name               = hiera('elk_stack_rabbitmq_shovelname')
+  $config_shovel                    = hiera('elk_stack_rabbitmq_shovel_conf')
+  $config_shovel_name               = hiera('elk_stack_rabbitmq_shovel_name')
+  $config_shovel_passwd             = hiera('elk_stack_rabbitmq_shovel_passwd')
   $config_shovel_statics            = {}
+  $shovel_origin                    = hiera('elk_stack_rabbitmq_shovel_origin')
   $admin_help                       = 'rabbit_admin.sh'
   $admin_tool                       = 'rabbitmqadmin'
   $admin_tool_dir                   = '/usr/local/bin'

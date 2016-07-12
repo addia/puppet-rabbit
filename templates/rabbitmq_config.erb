@@ -46,8 +46,9 @@
 <% end -%>
 
 <% if @config_shovel -%>
+<% if @rabbitmq_master -%>
   ]},
-  {rabbit_shovel, [
+  {rabbitmq_shovel, [
     {shovels, [
       {<%= @config_shovel_name %>, [
         {sources, [{brokers,
@@ -74,6 +75,7 @@
       ]}
     ]}
   ]}
+<% end -%>
 <% else -%>
   ]}
 <% end -%>

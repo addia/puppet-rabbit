@@ -22,7 +22,6 @@
 #     service_name                     = name of the service file for the package
 #     systemd_file                     = full path and file name of systemd
 #     service_file                     = full path and file name of service
-#     rabbit_shovel_dest               = rabbitmq address for shovel destination
 #     ssl_server_key                   = the rabbitmq-server key file name
 #     ssl_server_crt                   = the rabbitmq-server cert file name
 #     ssl_server_pem                   = the rabbitmq-server pem file name
@@ -41,7 +40,9 @@
 #     config_admin                     = set-up admin bolean
 #     config_shovel                    = set-up shovel bolean
 #     config_shovel_name               = the shovel name
+#     config_shovel_passwd             = the shovel password
 #     config_shovel_statics            = shovel stats
+#     shovel_origin                    = rabbitmq address for shovel origin
 #     admin_help                       = the admin helper script
 #     admin_tool                       = the admin script
 #     admin_tool_dir                   = location for the admin script
@@ -115,7 +116,6 @@ class rabbit (
   $repo_gpg_key                     = $rabbit::params::repo_gpg_key,
   $service_name                     = $rabbit::params::service_name,
   $systemd_file                     = $rabbit::params::systemd_file,
-  $rabbit_shovel_dest               = $rabbit::params::rabbit_shovel_dest,
   $ssl_server_key                   = $rabbit::params::ssl_server_key,
   $ssl_server_crt                   = $rabbit::params::ssl_server_crt,
   $ssl_server_pem                   = $rabbit::params::ssl_server_pem,
@@ -133,7 +133,9 @@ class rabbit (
   $config_cluster                   = $rabbit::params::config_cluster,
   $config_shovel                    = $rabbit::params::config_shovel,
   $config_shovel_name               = $rabbit::params::config_shovel_name,
+  $config_shovel_passwd             = $rabbit::params::config_shovel_passwd,
   $config_shovel_statics            = $rabbit::params::config_shovel_statics,
+  $shovel_origin                    = $rabbit::params::shovel_origin,
   $admin_help                       = $rabbit::params::admin_help,
   $admin_tool                       = $rabbit::params::admin_tool,
   $admin_tool_dir                   = $rabbit::params::admin_tool_dir,

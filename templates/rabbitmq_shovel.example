@@ -1,0 +1,41 @@
+  {rabbitmq_shovel,
+    [ {shovels, [ {my_first_shovel,
+                    [ {sources,
+                        [ {brokers, [ "amqp://fred:secret@host1.domain/my_vhost"
+                                    , "amqp://john:secret@host2.domain/my_vhost"
+                                    ]}
+                        , {declarations, [ {'exchange.declare',
+                                              [ {exchange, <<"my_fanout">>}
+                                              , {type, <<"fanout">>}
+                                              , durable
+                                              ]}
+                                         , {'queue.declare',
+                                              [{arguments,
+                                                 [{<<"x-message-ttl">>, long, 60000}]}]}
+                                         , {'queue.bind',
+                                              [ {exchange, <<"my_direct">>}
+                                              , {queue,    <<>>}
+                                              ]}
+                                         ]}
+                        ]}
+                    , {destinations,
+                        [ {broker, "amqp://"}
+                        , {declarations, [ {'exchange.declare',
+                                              [ {exchange, <<"my_direct">>}
+                                              , {type, <<"direct">>}
+                                              , durable
+                                              ]}
+                                         ]}
+                        ]}
+                    , {queue, <<>>}
+                    , {prefetch_count, 10}
+                    , {ack_mode, on_confirm}
+                    , {publish_properties, [ {delivery_mode, 2} ]}
+                    , {add_forward_headers, true}
+                    , {publish_fields, [ {exchange, <<"my_direct">>}
+                                       , {routing_key, <<"from_shovel">>}
+                                       ]}
+                    , {reconnect_delay, 5}
+                    ]}
+                ]}
+    ]}

@@ -39,7 +39,9 @@ class rabbit::config (
   $default_port                     = $rabbit::params::default_port,
   $config_shovel                    = $rabbit::params::config_shovel,
   $config_shovel_name               = $rabbit::params::config_shovel_name,
+  $config_shovel_passwd             = $rabbit::params::config_shovel_passwd,
   $config_shovel_statics            = $rabbit::params::config_shovel_statics,
+  $shovel_origin                    = $rabbit::params::shovel_origin,
   $logging_user                     = $rabbit::params::logging_user,
   $logging_pass                     = $rabbit::params::logging_pass,
   $logging_key                      = $rabbit::params::logging_key,
@@ -81,185 +83,192 @@ class rabbit::config (
     $rabbit_address                 = $::ipaddress_eth1
     }
 
+  if $rabbit_hostname == $cluster_master {
+    $rabbitmq_master                = true
+    }
+  else {
+    $rabbitmq_master                = false
+    }
+
   exec { "fix the hostname pants":
-    command           => "mv /etc/hosts.fix /etc/hosts",
-    onlyif            => 'grep -- "-RMQ-" /etc/hosts',
-    path              => "/sbin:/bin:/usr/sbin:/usr/bin",
+    command                         => "mv /etc/hosts.fix /etc/hosts",
+    onlyif                          => 'grep -- "-RMQ-" /etc/hosts',
+    path                            => "/sbin:/bin:/usr/sbin:/usr/bin",
     }
 
   host { "${rabbit_hostname}.${rabbit_domain}":
-    ensure            => 'present',
-    target            => '/etc/hosts',
-    ip                => $rabbit_address,
-    host_aliases      => [$rabbit_hostname, 'rabbit']
+    ensure                          => 'present',
+    target                          => '/etc/hosts',
+    ip                              => $rabbit_address,
+    host_aliases                    => [$rabbit_hostname, 'rabbit']
     }
 
   notify { "## --->>> Creating config files for: ${package_name}": }
 
   file { '/etc/rabbitmq':
-    ensure            => directory,
-    owner             => $user,
-    group             => $group,
-    mode              => '0755',
+    ensure                          => directory,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0755',
     }
 
   file { '/var/lib/rabbitmq':
-    ensure            => directory,
-    owner             => $user,
-    group             => $group,
-    mode              => '0755',
+    ensure                          => directory,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0755',
     }
 
   file { '/var/log/rabbitmq':
-    ensure            => directory,
-    owner             => $user,
-    group             => $group,
-    mode              => '0755',
+    ensure                          => directory,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0755',
     }
 
   file { '/run/rabbitmq':
-    ensure            => directory,
-    owner             => $user,
-    group             => $group,
-    mode              => '0755',
+    ensure                          => directory,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0755',
     }
 
   file { $config_env_file: 
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => template('rabbit/rabbitmq_env_config.erb'),
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => template('rabbit/rabbitmq_env_config.erb'),
     }
 
   file { "${admin_tool_dir}/${admin_help}":
-    ensure            => file,
-    owner             => 'root',
-    group             => 'root',
-    mode              => '0755',
-    content           => template('rabbit/rabbit_admin_sh.erb'),
+    ensure                          => file,
+    owner                           => 'root',
+    group                           => 'root',
+    mode                            => '0755',
+    content                         => template('rabbit/rabbit_admin_sh.erb'),
     }
 
   file { $config_adm_file: 
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => template('rabbit/rabbitmqadmin_conf.erb'),
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => template('rabbit/rabbitmqadmin_conf.erb'),
     }
 
   file { $config_file: 
-    ensure            => file,
-    replace           => false,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => template('rabbit/rabbitmq_config.erb'),
+    ensure                          => file,
+    replace                         => false,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => template('rabbit/rabbitmq_config.erb'),
     }
 
   file { $service_file:
-    ensure            => file,
-    replace           => false,
-    owner             => 'root',
-    group             => 'root',
-    mode              => '0644',
-    source            => "puppet:///modules/rabbit/rabbitmq-server.service",
+    ensure                          => file,
+    replace                         => false,
+    owner                           => 'root',
+    group                           => 'root',
+    mode                            => '0644',
+    source                          => "puppet:///modules/rabbit/rabbitmq-server.service",
     }
 
   file { $limits_file: 
-    ensure            => file,
-    owner             => 'root',
-    group             => 'root',
-    mode              => '0644',
-    content           => template('rabbit/30-rabbit_conf.erb'),
+    ensure                          => file,
+    owner                           => 'root',
+    group                           => 'root',
+    mode                            => '0644',
+    content                         => template('rabbit/30-rabbit_conf.erb'),
     }
 
   file { $erlang_cookie_file:
-    ensure            => file,
-    replace           => false,
-    owner             => $user,
-    group             => $group,
-    mode              => '0600',
-    content           => template('rabbit/erlang_cookie.erb'),
+    ensure                          => file,
+    replace                         => false,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0600',
+    content                         => template('rabbit/erlang_cookie.erb'),
     }
 
   file { $tmpfile:
-    ensure            => file,
-    owner             => 'root',
-    group             => 'root',
-    mode              => '0644',
-    source            => "puppet:///modules/rabbit/tmpfiles_rabbitmq.conf",
+    ensure                          => file,
+    owner                           => 'root',
+    group                           => 'root',
+    mode                            => '0644',
+    source                          => "puppet:///modules/rabbit/tmpfiles_rabbitmq.conf",
     }
 
   file { $ssl_dir:
-    ensure            => 'directory',
-    owner             => $user,
-    group             => $group,
-    mode              => '0750',
+    ensure                          => 'directory',
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0750',
     }
 
   file { $ssl_key:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_server_key')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_server_key')
     }
 
   file { $ssl_cert:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_server_cert')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_server_cert')
     }
 
   file { $ssl_pem:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_server_pem')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_server_pem')
     }
 
   file { $ssl_ckey:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_client_key')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_client_key')
     }
 
   file { $ssl_ccert:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_client_cert')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_client_cert')
     }
 
   file { $ssl_skey:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_shovel_key')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_shovel_key')
     }
 
   file { $ssl_scert:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_shovel_cert')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_shovel_cert')
     }
 
   file { $ssl_cpem:
-    ensure            => file,
-    owner             => $user,
-    group             => $group,
-    mode              => '0644',
-    content           => hiera('elk_stack_rabbitmq_client_pem')
+    ensure                          => file,
+    owner                           => $user,
+    group                           => $group,
+    mode                            => '0644',
+    content                         => hiera('elk_stack_rabbitmq_client_pem')
     }
 
   }
