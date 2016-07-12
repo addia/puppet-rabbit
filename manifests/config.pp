@@ -46,6 +46,7 @@ class rabbit::config (
   $logging_pass                     = $rabbit::params::logging_pass,
   $logging_key                      = $rabbit::params::logging_key,
   $logging_exchange                 = $rabbit::params::logging_exchange,
+  $logging_exchange_type            = $rabbit::params::logging_exchange_type,
   $logging_queue                    = $rabbit::params::logging_queue,
   $config_admin                     = $rabbit::params::config_admin,
   $admin_help                       = $rabbit::params::admin_help,

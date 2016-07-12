@@ -61,6 +61,7 @@
 #     logging_user                     = username for logging
 #     logging_pass                     = passwd for the logging user
 #     logging_exchange                 = rabbit exchange for logging
+#     logging_exchange_type            = rabbit exchange type
 #     logging_queue                    = rabbit queue for logging
 #     logging_key                      = key for accessing the logging queue
 #     admin_port                       = default admin port
@@ -155,6 +156,7 @@ class rabbit (
   $logging_pass                     = $rabbit::params::logging_pass,
   $logging_key                      = $rabbit::params::logging_key,
   $logging_exchange                 = $rabbit::params::logging_exchange,
+  $logging_exchange_type            = $rabbit::params::logging_exchange_type,
   $logging_queue                    = $rabbit::params::logging_queue,
   $config_admin                     = $rabbit::params::config_admin,
   $admin_port                       = $rabbit::params::admin_port,

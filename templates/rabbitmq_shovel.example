@@ -1,6 +1,7 @@
-  {rabbitmq_shovel,
-    [ {shovels, [ {my_first_shovel,
-                    [ {sources,
+  {rabbitmq_shovel, [
+    {shovels, [
+      {my_first_shovel, [
+                     {sources,
                         [ {brokers, [ "amqp://fred:secret@host1.domain/my_vhost"
                                     , "amqp://john:secret@host2.domain/my_vhost"
                                     ]}

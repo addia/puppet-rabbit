@@ -64,6 +64,7 @@ class rabbit::params {
   $logging_user                     = 'logstash'
   $logging_pass                     = hiera('elk_stack_logstash_passwd')
   $logging_exchange                 = 'logstash'
+  $logging_exchange_type            = 'topic'
   $logging_queue                    = 'log-item'
   $logging_key                      = hiera('elk_stack_logstash_key')
   $admin_port                       = '15672'

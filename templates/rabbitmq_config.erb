@@ -49,29 +49,42 @@
 <% if @rabbitmq_master -%>
   ]},
   {rabbitmq_shovel, [
-    {shovels, [
-      {<%= @config_shovel_name %>, [
-        {sources, [{brokers,
-                     ["amqp://<%= @default_user %>:<%= @default_pass %>@<%= @cluster_master %>.<%= @rabbit_domain %>/<%= @default_vhost %>",
-                      "amqp://<%= @default_user %>:<%= @default_pass %>@<%= @rabbit_shovel_dest %>/<%= @default_vhost %>"]},
-                   {declarations,
-                     ['queue.declare',
-                       {'queue.bind',
-                         [{exchange, <<"<%= @logging_exchange %>">>},
-                          {queue,    <<"<%= @logging_queue %>">>}]}]}]},
-        {destinations, [{broker, "amqp://"},
-                         {declarations,
-                           [{'exchange.declare',
-                             [{exchange, <<"<%= @logging_exchange %>">>},
-                               {type, <<"direct">>}, durable]}]}]},
-        {queue, <<"<%= @logging_queue %>">>},
-        {qos, 10},
-        {auto_ack, false},
-        {tx_size, 0},
-        {delivery_mode, keep},
+     {shovels, [
+        {<%= @config_shovel_name %>, [
+           {sources, [
+              {brokers, [
+                 "amqp://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>"
+              ]},
+              {declarations, [
+                 {'exchange.declare', [
+                    {exchange, <<"<%= @logging_exchange %>">>},
+                    {type,     <<"<%= @logging_exchange_type %>">>}, durable
+                 ]},
+                 {'queue.bind', [
+                    {exchange, <<"<%= @logging_exchange %>">>},
+                    {queue,    <<"<%= @logging_queue %>">>}
+                 ]}
+              ]}
+           ]},
+           {destinations, [
+              {broker, "amqp://<%= @default_user %>@<%= @default_vhost %>"
+               },
+              {declarations, [
+                 {'exchange.declare', [
+                    {exchange, <<"<%= @logging_exchange %>">>},
+                    {type,     <<"<%= @logging_exchange_type %>">>}, durable
+                 ]}
+              ]}
+           ]},
+        {queue, <<>>},
+        {prefetch_count, 25},
+        {ack_mode, on_publish},
+        {publish_properties, [ {delivery_mode, 2} ]},
+        {add_forward_headers, false}
         {publish_fields, [{exchange, <<"<%= @logging_exchange %>">>},
-                           {routing_key, <<"<%= @logging_key %>">>}]},
-        {reconnect, 5}
+                          {routing_key, <<"<%= @logging_key %>">>}
+                         ]},
+        {reconnect_delay, 5}
       ]}
     ]}
   ]}
