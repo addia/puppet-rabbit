@@ -84,8 +84,9 @@ class rabbit::config (
     $rabbit_address                 = $::ipaddress_eth1
     }
 
-  exec { "fix the hostname pants":
-    command                         => "mv /etc/hosts.fix /etc/hosts",
+  exec { "fix_the_hostname_pants":
+   #command                         => "mv /etc/hosts.fix /etc/hosts",
+    command                         => "cat /etc/hosts | tr [:upper:] [:lower:] > /tmp/hh; mv -f /tmp/hh /etc/hosts",
     onlyif                          => 'grep -- "-RMQ-" /etc/hosts',
     path                            => "/sbin:/bin:/usr/sbin:/usr/bin",
     }
@@ -109,7 +110,7 @@ class rabbit::config (
     }
     
   exec {"has_the_plugin_install_finished":
-    command                         => '/bin/false',
+    command                         => '/bin/true',
     onlyif                          => 'usr/bin/test -e /var/lib/rabbitmq/.plugins_done',
     }
 
