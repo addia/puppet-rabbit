@@ -99,6 +99,15 @@ class rabbit::config (
 
   notify { "## --->>> Preparing the shovel config variables for: ${package_name}": }
 
+  if $cluster_master == $rabbit_hostname {
+    warning( 'this should be true if $cluster_master matches $rabbit_hostname ... ' )
+    $rabbitmq_master                = true
+    }
+  else {
+    warning( 'this is false on all partner nodes. ' )
+    $rabbitmq_master                = false
+    }
+    
   if $config_shovel {
     if exists('/var/lib/rabbitmq/.plugins_done') {
       warning( 'this should be true ... ' )
