@@ -107,8 +107,9 @@ class rabbit::config (
     $rabbitmq_master                = false
     }
     
+  notice exists('/var/lib/rabbitmq/.plugins_done')
   if $config_shovel {
-    if exists('/var/lib/rabbitmq/.plugins_done') {
+    if exists ('/var/lib/rabbitmq/.plugins_done') {
       $rabbitmq_master1              = true
       }
     else {
