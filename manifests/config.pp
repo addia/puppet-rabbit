@@ -111,7 +111,7 @@ class rabbit::config (
     
   exec {"has_the_plugin_install_finished":
     command                         => '/bin/true',
-    onlyif                          => 'usr/bin/test -e /var/lib/rabbitmq/.plugins_done',
+    onlyif                          => '/usr/bin/test -e /var/lib/rabbitmq/.plugins_done',
     }
 
   if $config_shovel {
