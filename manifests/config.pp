@@ -114,6 +114,7 @@ class rabbit::config (
     onlyif                          => '/usr/bin/test -e /var/lib/rabbitmq/.plugins_done',
     }
 
+  notify { "this should be true: config_shovel and plugin ... $config_shovel + $has_the_plugin_install_finished ": }
   if $config_shovel {
     if $has_the_plugin_install_finished {
     $rabbitmq_master1               = true
