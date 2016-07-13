@@ -109,14 +109,15 @@ class rabbit::config (
     
   if $config_shovel {
     if exists('/var/lib/rabbitmq/.plugins_done') {
-      $rabbitmq_master              = true
+      $rabbitmq_master1              = true
       }
     else {
-      $rabbitmq_master              = false
+      $rabbitmq_master1              = false
       }
     }
 
-  notify { "this should be true ... $rabbitmq_master ": }
+  notify { "this should be true: rabbit-master ... $rabbitmq_master ": }
+  notify { "this should be true: rabbit-master1 ... $rabbitmq_master1 ": }
   notify { "## --->>> Creating config files for: ${package_name}": }
 
   file { '/etc/rabbitmq':
