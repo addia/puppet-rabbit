@@ -105,17 +105,19 @@ class rabbit::config (
     }
   else {
     $rabbitmq_master                = false
+    $config_shovel                  = false
     }
     
-  notice exists('/var/lib/rabbitmq/.plugins_done')
-  if $config_shovel {
-    if exists ('/var/lib/rabbitmq/.plugins_done') {
-      $rabbitmq_master1              = true
-      }
-    else {
-      $rabbitmq_master1              = false
-      }
+  exec {"has_the_plugin_install_finished":
+    command                         => '/bin/false',
+    onlyif                          => 'usr/bin/test -e /var/lib/rabbitmq/.plugins_done',
     }
+
+  if $config_shovel {
+    if $has_the_plugin_install_finished {
+    $rabbitmq_master1               = true
+    }
+  }
 
   notify { "this should be true: rabbit-master ... $rabbitmq_master ": }
   notify { "this should be true: rabbit-master1 ... $rabbitmq_master1 ": }
