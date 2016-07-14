@@ -44,53 +44,6 @@
                   {keyfile, "<%= @ssl_key %>"}]}
     ]}
 <% end -%>
-
-<% if @config_shovel -%>
-<% if @rabbitmq_master -%>
-  ]},
-  {rabbitmq_shovel, [
-     {shovels, [
-        {<%= @config_shovel_name %>, [
-           {sources, [
-              {brokers, [
-                 "amqp://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>"
-              ]},
-              {declarations, [
-                 {'exchange.declare', [
-                    {exchange, <<"<%= @logging_exchange %>">>},
-                    {type,     <<"<%= @logging_exchange_type %>">>}, durable
-                 ]},
-                 {'queue.bind', [
-                    {exchange, <<"<%= @logging_exchange %>">>},
-                    {queue,    <<"<%= @logging_queue %>">>}
-                 ]}
-              ]}
-           ]},
-           {destinations, [
-              {broker, "amqp://<%= @default_user %>@<%= @default_vhost %>"
-               },
-              {declarations, [
-                 {'exchange.declare', [
-                    {exchange, <<"<%= @logging_exchange %>">>},
-                    {type,     <<"<%= @logging_exchange_type %>">>}, durable
-                 ]}
-              ]}
-           ]},
-        {queue, <<>>},
-        {prefetch_count, 25},
-        {ack_mode, on_publish},
-        {publish_properties, [ {delivery_mode, 2} ]},
-        {add_forward_headers, false}
-        {publish_fields, [{exchange, <<"<%= @logging_exchange %>">>},
-                          {routing_key, <<"<%= @logging_key %>">>}
-                         ]},
-        {reconnect_delay, 5}
-      ]}
-    ]}
   ]}
-<% end -%>
-<% else -%>
-  ]}
-<% end -%>
 ].
 % EOF

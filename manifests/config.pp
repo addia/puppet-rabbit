@@ -100,22 +100,18 @@ class rabbit::config (
   notify { "## --->>> Preparing the shovel config variables for: ${package_name}": }
 
   notify { "this should be true if $cluster_master matches $rabbit_hostname ... ": }
-  if $cluster_master == $rabbit_hostname {
-    $rabbitmq_master                = true
-    }
-  else {
-    $rabbitmq_master                = false
-    }
     
   notify { "this should be true: openssl, config_shovel and plugin ... $::openssl_version + $config_shovel + $::rabbitmq_plugins_done": }
-  if $config_shovel {
-    if $::rabbitmq_plugins_done == 0 {
-    $rabbitmq_master1               = true
+  if $cluster_master == $rabbit_hostname {
+    if $config_shovel {
+      if $::rabbitmq_plugins_done == 0 {
+        $rabbitmq_master            = true
+      }
     }
   }
 
   notify { "this should be true: rabbit-master ... $rabbitmq_master ": }
-  notify { "this should be true: rabbit-master1 ... $rabbitmq_master1 ": }
+
   notify { "## --->>> Creating config files for: ${package_name}": }
 
   file { '/etc/rabbitmq':
