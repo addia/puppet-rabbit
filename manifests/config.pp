@@ -85,9 +85,8 @@ class rabbit::config (
     }
 
   exec { "fix_the_hostname_pants":
-   #command                         => "mv /etc/hosts.fix /etc/hosts",
     command                         => "cat /etc/hosts | tr [:upper:] [:lower:] > /tmp/hh; mv -f /tmp/hh /etc/hosts",
-    onlyif                          => 'grep -- "-RMQ-" /etc/hosts',
+    onlyif                          => "grep -v '^#' /etc/hosts | grep -q -e '[[:upper:]]'",
     path                            => "/sbin:/bin:/usr/sbin:/usr/bin",
     }
 
@@ -111,7 +110,7 @@ class rabbit::config (
     
   notify { "this should be true: openssl, config_shovel and plugin ... $::openssl_version + $config_shovel + $::rabbitmq_plugins_done": }
   if $config_shovel {
-    if $has_the_plugin_install_finished {
+    if $::rabbitmq_plugins_done == 0 {
     $rabbitmq_master1               = true
     }
   }
