@@ -51,8 +51,8 @@
      {shovels, [
         {'<%= @config_shovel_name %>', [
            {sources, [
-              {brokers, [
-                 "amqps://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>?cacertfile=<%= @ssl_cacert_file %>&certfile=<%= @ssl_scert %>&keyfile=<%= @ssl_skey %>&verify=verify_peer"
+              {broker, [
+                 "amqps://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>?cacertfile=<%= @ssl_cacert_file %>&certfile=<%= @ssl_scert %>&keyfile=<%= @ssl_skey %>&verify=verify_peer&fail_if_no_peer_cert=true&auth_mechanism=external"
               ]},
               {declarations, [
                  {'exchange.declare', [
@@ -66,7 +66,7 @@
               ]}
            ]},
            {destinations, [
-              {broker, "amqp://<%= @default_user %>@<%= @default_vhost %>"
+              {broker, "amqps://<%= @default_user %>@<%= @default_vhost %>"
                },
               {declarations, [
                  {'exchange.declare', [
@@ -83,7 +83,7 @@
         {publish_fields, [{exchange, <<"<%= @logging_exchange %>">>},
                           {routing_key, <<"<%= @logging_key %>">>}
                          ]},
-        {reconnect_delay, 5}
+        {reconnect_delay, 60}
       ]}
     ]}
   ]}
