@@ -46,7 +46,6 @@
 <% end -%>
 
 <% if @config_shovel -%>
-<% if @rabbitmq_master -%>
   ]},
   {rabbitmq_shovel, [
      {shovels, [
@@ -88,7 +87,6 @@
       ]}
     ]}
   ]}
-<% end -%>
 <% else -%>
   ]}
 <% end -%>
