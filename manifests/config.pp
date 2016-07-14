@@ -105,7 +105,6 @@ class rabbit::config (
     }
   else {
     $rabbitmq_master                = false
-    $config_shovel                  = false
     }
     
   notify { "this should be true: openssl, config_shovel and plugin ... $::openssl_version + $config_shovel + $::rabbitmq_plugins_done": }
