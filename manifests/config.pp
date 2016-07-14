@@ -167,7 +167,6 @@ class rabbit::config (
 
   file { $config_file: 
     ensure                          => file,
-    replace                         => false,
     owner                           => $user,
     group                           => $group,
     mode                            => '0644',
