@@ -51,6 +51,8 @@ class rabbit::plugins (
     mode              => '0644',
   }
 
+  notify { "## --->>> Installing the admin tool for package: ${package_name}":}
+
   file { "${admin_tool_dir}/${admin_tool}":
     ensure            => present,
     owner             => 'root',

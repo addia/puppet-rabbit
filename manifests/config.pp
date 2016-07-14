@@ -109,7 +109,7 @@ class rabbit::config (
       $rabbitmq_template            = "rabbit/rabbitmq_config.erb"
   }
 
-  notify { "this should be a template name: rabbit-template ... $rabbitmq_template ": }
+  notify { "## --->>> Using template name: $rabbitmq_template ": }
 
   notify { "## --->>> Creating config files for: ${package_name}": }
 
