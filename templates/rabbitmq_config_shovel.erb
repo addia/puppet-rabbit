@@ -49,10 +49,10 @@
   ]},
   {rabbitmq_shovel, [
      {shovels, [
-        {<%= @config_shovel_name %>, [
+        {'<%= @config_shovel_name %>', [
            {sources, [
               {brokers, [
-                 "amqp://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>"
+                 "amqps://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>?cacertfile=<%= @ssl_cacert_file %>&certfile=<%= @ssl_scert %>&keyfile=<%= @ssl_skey %>&verify=verify_peer"
               ]},
               {declarations, [
                  {'exchange.declare', [
@@ -79,7 +79,7 @@
         {prefetch_count, 25},
         {ack_mode, on_publish},
         {publish_properties, [ {delivery_mode, 2} ]},
-        {add_forward_headers, false}
+        {add_forward_headers, false},
         {publish_fields, [{exchange, <<"<%= @logging_exchange %>">>},
                           {routing_key, <<"<%= @logging_key %>">>}
                          ]},
