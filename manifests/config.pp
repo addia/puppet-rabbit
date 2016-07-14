@@ -171,7 +171,7 @@ class rabbit::config (
     owner                           => $user,
     group                           => $group,
     mode                            => '0644',
-    content                         => template('rabbit/rabbitmq_config.erb'),
+    content                         => template($rabbitmq_template),
     }
 
   file { $service_file:
