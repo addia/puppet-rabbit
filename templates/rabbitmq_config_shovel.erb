@@ -52,7 +52,7 @@
         {'<%= @config_shovel_name %>', [
            {sources, [
               {brokers, [
-                 "amqps://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>?cacertfile=<%= @ssl_cacert_file %>&certfile=<%= @ssl_scert %>&keyfile=<%= @ssl_skey %>&verify=verify_peer&fail_if_no_peer_cert=true&auth_mechanism=external"
+                 "amqps://<%= @logging_user %>:<%= @config_shovel_passwd %>@<%= @shovel_origin %>.<%= @rabbit_domain %>/<%= @default_vhost %>?cacertfile=<%= @ssl_cacert_file %>&certfile=<%= @ssl_scert %>&keyfile=<%= @ssl_skey %>&verify=verify_peer&fail_if_no_peer_cert=true"
               ]},
               {declarations, [
                  {'exchange.declare', [
