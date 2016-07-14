@@ -102,6 +102,8 @@ class rabbit::config (
   if $::rabbitmq_plugins_done == 0 {
     if ($cluster_master == $rabbit_hostname and $config_shovel == true) {
         $rabbitmq_template          = "rabbit/rabbitmq_config_shovel.erb"
+    } else {
+        $rabbitmq_template          = "rabbit/rabbitmq_config.erb"
     }
   } else {
       $rabbitmq_template            = "rabbit/rabbitmq_config.erb"
