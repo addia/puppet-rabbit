@@ -52,6 +52,7 @@ class rabbit::config (
   $config_cluster                   = $rabbit::params::config_cluster,
   $cluster_node_type                = $rabbit::params::cluster_node_type,
   $cluster_data_nic                 = $rabbit::params::cluster_data_nic,
+  $rabbit_address                   = $rabbit::params::rabbit_address,
   $cluster_master                   = $rabbit::params::cluster_master,
   $cluster_nodes                    = $rabbit::params::cluster_nodes,
   $cluster_partition_handling       = $rabbit::params::cluster_partition_handling,
