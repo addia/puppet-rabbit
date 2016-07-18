@@ -18,8 +18,8 @@ class rabbit::config (
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
   $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
-  $ssl_shovel_key                   = $rabbit::params::ssl_shovel_key,
-  $ssl_shovel_crt                   = $rabbit::params::ssl_shovel_crt,
+  $ssl_origin_key                   = $rabbit::params::ssl_origin_key,
+  $ssl_origin_crt                   = $rabbit::params::ssl_origin_crt,
   $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_dir                          = $rabbit::params::ssl_dir,
@@ -37,11 +37,10 @@ class rabbit::config (
   $erlang_cookie                    = $rabbit::params::erlang_cookie,
   $erlang_cookie_file               = $rabbit::params::erlang_cookie_file,
   $default_port                     = $rabbit::params::default_port,
-  $config_shovel                    = $rabbit::params::config_shovel,
-  $config_shovel_name               = $rabbit::params::config_shovel_name,
-  $config_shovel_passwd             = $rabbit::params::config_shovel_passwd,
-  $config_shovel_statics            = $rabbit::params::config_shovel_statics,
-  $shovel_origin                    = $rabbit::params::shovel_origin,
+  $config_origin                    = $rabbit::params::config_origin,
+  $config_origin_name               = $rabbit::params::config_origin_name,
+  $config_origin_passwd             = $rabbit::params::config_origin_passwd,
+  $config_origin_statics            = $rabbit::params::config_origin_statics,
   $logging_user                     = $rabbit::params::logging_user,
   $logging_pass                     = $rabbit::params::logging_pass,
   $logging_key                      = $rabbit::params::logging_key,
@@ -65,7 +64,7 @@ class rabbit::config (
   $cluster_partition_handling       = $rabbit::params::cluster_partition_handling,
   $config_env_file                  = $rabbit::params::config_env_file,
   $config_adm_file                  = $rabbit::params::config_adm_file,
-  $rabbit_shovel_dest               = $rabbit::params::rabbit_shovel_dest,
+  $rabbit_origin_dest               = $rabbit::params::rabbit_origin_dest,
   $package_name                     = $rabbit::params::package_name,
   $environment_variables            = $rabbit::params::environment_variables,
   $config_variables                 = $rabbit::params::config_variables,
@@ -97,10 +96,10 @@ class rabbit::config (
     host_aliases                    => [$rabbit_hostname, 'rabbit']
     }
 
-  notify { "## --->>> Preparing the shovel config variables for: ${package_name}": }
+  notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
 
   if $::rabbitmq_plugins_done == 0 {
-    if ($cluster_master == $rabbit_hostname and $config_shovel == true) {
+    if ($cluster_master == $rabbit_hostname and $config_origin == true) {
         $rabbitmq_template          = "rabbit/rabbitmq_config_shovel.erb"
     } else {
         $rabbitmq_template          = "rabbit/rabbitmq_config.erb"
@@ -259,7 +258,7 @@ class rabbit::config (
     owner                           => $user,
     group                           => $group,
     mode                            => '0644',
-    content                         => hiera('elk_stack_rabbitmq_shovel_key')
+    content                         => hiera('elk_stack_rabbitmq_origin_key')
     }
 
   file { $ssl_scert:
@@ -267,7 +266,7 @@ class rabbit::config (
     owner                           => $user,
     group                           => $group,
     mode                            => '0644',
-    content                         => hiera('elk_stack_rabbitmq_shovel_cert')
+    content                         => hiera('elk_stack_rabbitmq_origin_cert')
     }
 
   file { $ssl_cpem:
