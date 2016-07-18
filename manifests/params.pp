@@ -41,11 +41,11 @@ class rabbit::params {
   $tmpfile                          = '/usr/lib/tmpfiles.d/rabbitmq.conf'
   $config_cluster                   = true
   $config_admin                     = true
-  $config_shovel                    = hiera('elk_stack_rabbitmq_shovel_conf')
-  $config_shovel_name               = hiera('elk_stack_rabbitmq_shovel_name')
-  $config_shovel_passwd             = hiera('elk_stack_rabbitmq_shovel_passwd')
+  $config_shovel                    = false
+  $config_shovel_name               = undef
+  $config_shovel_passwd             = undef
   $config_shovel_statics            = {}
-  $shovel_origin                    = hiera('elk_stack_rabbitmq_shovel_origin')
+  $shovel_origin                    = undef
   $admin_help                       = 'rabbit_admin.sh'
   $admin_tool                       = 'rabbitmqadmin'
   $admin_tool_dir                   = '/usr/local/bin'
