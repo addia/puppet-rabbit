@@ -28,8 +28,6 @@
 #     ssl_client_key                   = the rabbitmq-client key file name
 #     ssl_client_crt                   = the rabbitmq-client cert file name
 #     ssl_client_pem                   = the rabbitmq-client pem file name
-#     ssl_origin_key                   = the rabbitmq-origin key file name
-#     ssl_origin_crt                   = the rabbitmq-origin cert file name
 #     ssl_cacert_file                  = the elk stack ca cert file
 #     config_file                      = the config file
 #     config_env_file                  = the environment config file
@@ -39,9 +37,6 @@
 #     config_cluster                   = set-up cluster bolean
 #     config_admin                     = set-up admin bolean
 #     config_origin                    = set-up origin bolean
-#     config_origin_name               = the origin name
-#     config_origin_passwd             = the origin password
-#     config_origin_statics            = origin stats
 #     admin_help                       = the admin helper script
 #     admin_tool                       = the admin script
 #     admin_tool_dir                   = location for the admin script
@@ -74,8 +69,6 @@
 #     ssl_ccert                        = ssl client cert
 #     ssl_ckey                         = ssl client key
 #     ssl_cpem                         = ssl client pem
-#     ssl_scert                        = ssl origin cert
-#     ssl_skey                         = ssl origin key
 #     ssl_port                         = port for ssl
 #     ssl_interface                    = ssl interface port
 #     ssl_management_port              = ssl management port
@@ -122,8 +115,6 @@ class rabbit (
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
   $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
-  $ssl_origin_key                   = $rabbit::params::ssl_origin_key,
-  $ssl_origin_crt                   = $rabbit::params::ssl_origin_crt,
   $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $config_file                      = $rabbit::params::config_file,
   $limits_file                      = $rabbit::params::limits_file,
@@ -132,9 +123,6 @@ class rabbit (
   $config_env_file                  = $rabbit::params::config_env_file,
   $config_cluster                   = $rabbit::params::config_cluster,
   $config_origin                    = $rabbit::params::config_origin,
-  $config_origin_name               = $rabbit::params::config_origin_name,
-  $config_origin_passwd             = $rabbit::params::config_origin_passwd,
-  $config_origin_statics            = $rabbit::params::config_origin_statics,
   $admin_help                       = $rabbit::params::admin_help,
   $admin_tool                       = $rabbit::params::admin_tool,
   $admin_tool_dir                   = $rabbit::params::admin_tool_dir,
@@ -168,8 +156,6 @@ class rabbit (
   $ssl_ccert                        = $rabbit::params::ssl_ccert,
   $ssl_ckey                         = $rabbit::params::ssl_ckey,
   $ssl_cpem                         = $rabbit::params::ssl_cpem,
-  $ssl_scert                        = $rabbit::params::ssl_scert,
-  $ssl_skey                         = $rabbit::params::ssl_skey,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_interface                    = $rabbit::params::ssl_interface,
   $ssl_management_port              = $rabbit::params::ssl_management_port,

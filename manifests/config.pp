@@ -18,8 +18,6 @@ class rabbit::config (
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
   $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
-  $ssl_origin_key                   = $rabbit::params::ssl_origin_key,
-  $ssl_origin_crt                   = $rabbit::params::ssl_origin_crt,
   $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_dir                          = $rabbit::params::ssl_dir,
@@ -29,8 +27,6 @@ class rabbit::config (
   $ssl_ccert                        = $rabbit::params::ssl_ccert,
   $ssl_ckey                         = $rabbit::params::ssl_ckey,
   $ssl_cpem                         = $rabbit::params::ssl_cpem,
-  $ssl_scert                        = $rabbit::params::ssl_scert,
-  $ssl_skey                         = $rabbit::params::ssl_skey,
   $ssl_verify                       = $rabbit::params::ssl_verify,
   $ssl_fail_if_no_peer_cert         = $rabbit::params::ssl_fail_if_no_peer_cert,
   $ssl_management_port              = $rabbit::params::ssl_management_port,
@@ -38,9 +34,6 @@ class rabbit::config (
   $erlang_cookie_file               = $rabbit::params::erlang_cookie_file,
   $default_port                     = $rabbit::params::default_port,
   $config_origin                    = $rabbit::params::config_origin,
-  $config_origin_name               = $rabbit::params::config_origin_name,
-  $config_origin_passwd             = $rabbit::params::config_origin_passwd,
-  $config_origin_statics            = $rabbit::params::config_origin_statics,
   $logging_user                     = $rabbit::params::logging_user,
   $logging_pass                     = $rabbit::params::logging_pass,
   $logging_key                      = $rabbit::params::logging_key,
@@ -99,16 +92,11 @@ class rabbit::config (
   notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
 
   if $::rabbitmq_plugins_done == 0 {
-    if ($cluster_master == $rabbit_hostname and $config_origin == true) {
-        $rabbitmq_template          = "rabbit/rabbitmq_config_shovel.erb"
-    } else {
-        $rabbitmq_template          = "rabbit/rabbitmq_config.erb"
+    if $config_origin == true {
+        include logreceiver
+      }
     }
-  } else {
-      $rabbitmq_template            = "rabbit/rabbitmq_config.erb"
-  }
 
-  notify { "## --->>> Using template name: $rabbitmq_template ": }
 
   notify { "## --->>> Creating config files for: ${package_name}": }
 
@@ -169,7 +157,7 @@ class rabbit::config (
     owner                           => $user,
     group                           => $group,
     mode                            => '0644',
-    content                         => template($rabbitmq_template),
+    content                         => template('rabbit/rabbitmq_config.erb'),
     }
 
   file { $service_file:
@@ -251,22 +239,6 @@ class rabbit::config (
     group                           => $group,
     mode                            => '0644',
     content                         => hiera('elk_stack_rabbitmq_client_cert')
-    }
-
-  file { $ssl_skey:
-    ensure                          => file,
-    owner                           => $user,
-    group                           => $group,
-    mode                            => '0644',
-    content                         => hiera('elk_stack_rabbitmq_origin_key')
-    }
-
-  file { $ssl_scert:
-    ensure                          => file,
-    owner                           => $user,
-    group                           => $group,
-    mode                            => '0644',
-    content                         => hiera('elk_stack_rabbitmq_origin_cert')
     }
 
   file { $ssl_cpem:
