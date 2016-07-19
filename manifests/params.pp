@@ -13,6 +13,7 @@ class rabbit::params {
 
   $ensure                           = 'present'
   $version                          = '3.5.7'
+  $er_version                       = 'R16B-03.17.el7'
   $patch                            = '-1'
   $package_name                     = 'rabbitmq-server'
   $user                             = 'rabbitmq'

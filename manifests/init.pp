@@ -12,6 +12,7 @@
 #   Explanation of what this parameter affects and what it defaults to.
 #     ensure                           = package install option
 #     version                          = version we want to install
+#     er_version                       = Erlang version we want to install
 #     patch                            = and the patch to install
 #     package_name                     = the package name
 #     user                             = run as user
@@ -97,6 +98,7 @@
 class rabbit (
   $ensure                           = $rabbit::params::ensure,
   $version                          = $rabbit::params::version,
+  $er_version                       = $rabbit::params::er_version,
   $patch                            = $rabbit::params::patch,
   $package_name                     = $rabbit::params::package_name,
   $user                             = $rabbit::params::user,

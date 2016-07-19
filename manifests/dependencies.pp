@@ -12,21 +12,21 @@
 class rabbit::dependencies (
   $ensure               = $rabbit::params::ensure,
   $version              = $rabbit::params::version,
+  $er_version           = $rabbit::params::er_version,
   $patch                = $rabbit::params::patch,
   $package_name         = $rabbit::params::package_name
 ) inherits rabbit::params {
 
-  notify { "## --->>> Installing default packages for: ${package_name}": }
+  notify { "## --->>> Installing dependencies packages for: ${package_name}": }
 
-  $rabbits = ['java-1.8.0-openjdk', 'java-1.8.0-openjdk-devel' ,'selinux-policy-devel']
-  package { $rabbits:
+  package { 'selinux-policy-devel':
      ensure             => $ensure,
      }
 
   notify { "## --->>> Installing release 'R16B-03.17' patches for Erlang ": }
   package { 'erlang':
      provider           => 'yum',
-     ensure             => 'R16B-03.17.el7',
+     ensure             => $er_version,
      install_options    => ['--enablerepo', 'epel-testing'],
      }
 
