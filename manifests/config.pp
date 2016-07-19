@@ -66,10 +66,10 @@ class rabbit::config (
   $rabbit_hostname                  = $::hostname
   $rabbit_domain                    = $::domain
   if $cluster_data_nic == 'eth0' {
-    $rabbit_address                 = $::ipaddress_eth0
+    $rabbit_ip                      = $::ipaddress_eth0
     }
   if $cluster_data_nic == 'eth1' {
-    $rabbit_address                 = $::ipaddress_eth1
+    $rabbit_ip                      = $::ipaddress_eth1
     }
 
   exec { "fix_the_hostname_pants":
@@ -81,7 +81,7 @@ class rabbit::config (
   host { "${rabbit_hostname}.${rabbit_domain}":
     ensure                          => 'present',
     target                          => '/etc/hosts',
-    ip                              => $rabbit_address,
+    ip                              => $rabbit_ip,
     host_aliases                    => [$rabbit_hostname, 'rabbit']
     }
 
