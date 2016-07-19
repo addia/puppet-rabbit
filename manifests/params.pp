@@ -26,10 +26,8 @@ class rabbit::params {
 
   $ssl_server_key                   = "rabbitmq-server.key"
   $ssl_server_crt                   = "rabbitmq-server.crt"
-  $ssl_server_pem                   = "rabbitmq-server.pem"
   $ssl_client_key                   = "rabbitmq-client.key"
   $ssl_client_crt                   = "rabbitmq-client.crt"
-  $ssl_client_pem                   = "rabbitmq-client.pem"
   $ssl_cacert_file                  = "/etc/pki/ca-trust/source/anchors/elk_ca_cert.crt"
 
   $config_file                      = '/etc/rabbitmq/rabbitmq.config'
@@ -39,7 +37,7 @@ class rabbit::params {
   $tmpfile                          = '/usr/lib/tmpfiles.d/rabbitmq.conf'
   $config_cluster                   = true
   $config_admin                     = true
-  $config_origin                    = hiera('elk_stack_rabbitmq_origin_conf')
+  $configure_origin                 = hiera('elk_stack_rabbitmq_origin_conf')
   $admin_help                       = 'rabbit_admin.sh'
   $admin_tool                       = 'rabbitmqadmin'
   $admin_tool_dir                   = '/usr/local/bin'
@@ -67,10 +65,8 @@ class rabbit::params {
   $ssl                              = true
   $ssl_only                         = true
   $ssl_dir                          = "/etc/rabbitmq/ssl"
-  $ssl_pem                          = "${ssl_dir}/${ssl_server_pem}"
   $ssl_cert                         = "${ssl_dir}/${ssl_server_crt}"
   $ssl_key                          = "${ssl_dir}/${ssl_server_key}"
-  $ssl_cpem                         = "${ssl_dir}/${ssl_client_pem}"
   $ssl_ccert                        = "${ssl_dir}/${ssl_client_crt}"
   $ssl_ckey                         = "${ssl_dir}/${ssl_client_key}"
   $ssl_port                         = '5671'

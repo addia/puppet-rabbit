@@ -14,26 +14,21 @@ class rabbit::config (
   $group                            = $rabbit::params::group,
   $ssl_server_key                   = $rabbit::params::ssl_server_key,
   $ssl_server_crt                   = $rabbit::params::ssl_server_crt,
-  $ssl_server_pem                   = $rabbit::params::ssl_server_pem,
   $ssl_client_key                   = $rabbit::params::ssl_client_key,
   $ssl_client_crt                   = $rabbit::params::ssl_client_crt,
-  $ssl_client_pem                   = $rabbit::params::ssl_client_pem,
   $ssl_cacert_file                  = $rabbit::params::ssl_cacert_file,
   $ssl_port                         = $rabbit::params::ssl_port,
   $ssl_dir                          = $rabbit::params::ssl_dir,
   $ssl_cert                         = $rabbit::params::ssl_cert,
   $ssl_key                          = $rabbit::params::ssl_key,
-  $ssl_pem                          = $rabbit::params::ssl_pem,
   $ssl_ccert                        = $rabbit::params::ssl_ccert,
   $ssl_ckey                         = $rabbit::params::ssl_ckey,
-  $ssl_cpem                         = $rabbit::params::ssl_cpem,
   $ssl_verify                       = $rabbit::params::ssl_verify,
   $ssl_fail_if_no_peer_cert         = $rabbit::params::ssl_fail_if_no_peer_cert,
   $ssl_management_port              = $rabbit::params::ssl_management_port,
   $erlang_cookie                    = $rabbit::params::erlang_cookie,
   $erlang_cookie_file               = $rabbit::params::erlang_cookie_file,
   $default_port                     = $rabbit::params::default_port,
-  $config_origin                    = $rabbit::params::config_origin,
   $logging_user                     = $rabbit::params::logging_user,
   $logging_pass                     = $rabbit::params::logging_pass,
   $logging_key                      = $rabbit::params::logging_key,
@@ -41,6 +36,8 @@ class rabbit::config (
   $logging_exchange_type            = $rabbit::params::logging_exchange_type,
   $logging_queue                    = $rabbit::params::logging_queue,
   $config_admin                     = $rabbit::params::config_admin,
+  $config_cluster                   = $rabbit::params::config_cluster,
+  $configure_origin                 = $rabbit::params::configure_origin,
   $admin_help                       = $rabbit::params::admin_help,
   $admin_tool_dir                   = $rabbit::params::admin_tool_dir,
   $admin_port                       = $rabbit::params::admin_port,
@@ -49,7 +46,6 @@ class rabbit::config (
   $service_file                     = $rabbit::params::service_file,
   $tmpfile                          = $rabbit::params::tmpfile,
   $file_limit                       = $rabbit::params::file_limit,
-  $config_cluster                   = $rabbit::params::config_cluster,
   $cluster_node_type                = $rabbit::params::cluster_node_type,
   $cluster_data_nic                 = $rabbit::params::cluster_data_nic,
   $rabbit_address                   = $rabbit::params::rabbit_address,
@@ -58,7 +54,6 @@ class rabbit::config (
   $cluster_partition_handling       = $rabbit::params::cluster_partition_handling,
   $config_env_file                  = $rabbit::params::config_env_file,
   $config_adm_file                  = $rabbit::params::config_adm_file,
-  $rabbit_origin_dest               = $rabbit::params::rabbit_origin_dest,
   $package_name                     = $rabbit::params::package_name,
   $environment_variables            = $rabbit::params::environment_variables,
   $config_variables                 = $rabbit::params::config_variables,
@@ -93,7 +88,7 @@ class rabbit::config (
   notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
 
   if $::rabbitmq_plugins_done == 0 {
-    if $config_origin == true {
+    if $configure_origin == true {
         include logreceiver
       }
     }
@@ -218,14 +213,6 @@ class rabbit::config (
     content                         => hiera('elk_stack_rabbitmq_server_cert')
     }
 
-  file { $ssl_pem:
-    ensure                          => file,
-    owner                           => $user,
-    group                           => $group,
-    mode                            => '0644',
-    content                         => hiera('elk_stack_rabbitmq_server_pem')
-    }
-
   file { $ssl_ckey:
     ensure                          => file,
     owner                           => $user,
@@ -240,14 +227,6 @@ class rabbit::config (
     group                           => $group,
     mode                            => '0644',
     content                         => hiera('elk_stack_rabbitmq_client_cert')
-    }
-
-  file { $ssl_cpem:
-    ensure                          => file,
-    owner                           => $user,
-    group                           => $group,
-    mode                            => '0644',
-    content                         => hiera('elk_stack_rabbitmq_client_pem')
     }
 
   }
