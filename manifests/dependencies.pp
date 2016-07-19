@@ -23,7 +23,7 @@ class rabbit::dependencies (
      ensure             => $ensure,
      }
 
-  notify { "## --->>> Installing release 'R16B-03.17' patches for Erlang ": }
+  notify { "## --->>> Installing release $er_version patches for Erlang ": }
   package { 'erlang':
      provider           => 'yum',
      ensure             => $er_version,
