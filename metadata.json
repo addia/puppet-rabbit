@@ -1,17 +1,17 @@
 {
-  "name": "addis-rabbitmq",
-  "version": "0.0.1",
-  "author": "LandRegistry, Addi",
+  "name": "puppet-rabbit",
+  "version": "0.0.2",
+  "author": "LandRegistry, Addi Abel",
   "summary": "Installs, configures and manages RabbitMQ at Landregistry",
   "license": "MIT",
-  "source": "https://github.com/addi-abel/addis-rabbitmq",
-  "project_page": "https://github.com/addi-abel/addis-rabbitmq",
+  "source": "https://github.com/LandRegistry-Ops/puppet-rabbit",
+  "project_page": "https://github.com/LandRegistry-Ops/puppet-rabbit",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">=3.0.0 <5.0.0"},
-    {"name":"puppetlabs-rabbitmq","version_requirement":">= 5.0.0"},
-    {"name":"nanliu/staging","version_requirement":">=0.3.1"},
+    {"name":"puppetlabs-rabbitmq","version_requirement":">= 5.4.0"},
+    {"name":"nanliu/staging","version_requirement":">=1.0.3"},
     {"name":"garethr/erlang","version_requirement":">= 0.3.0"},
-    {"name":"jfryman/selinux","version_requirement":">= 0.5.4"},
-    {"name":"maestrodev/wget","version_requirement":">= 1.7.0"}
+    {"name":"jfryman/selinux","version_requirement":">= 0.4.0"},
+    {"name":"maestrodev/wget","version_requirement":">= 1.7.3"}
   ]
 }
