@@ -16,6 +16,7 @@
 % See http://www.rabbitmq.com/configure.html for details.
 %
 [
+  {ssl, [{versions, ['tlsv1.2', 'tlsv1.1', tlsv1]}]},
   {rabbit, [
 <% if @config_cluster -%>
     {cluster_nodes, {[<%= @cluster_nodes.map { |n| "\'rabbit@#{n}\'" }.join(', ') %>], <%= @cluster_node_type %>}},
@@ -24,7 +25,8 @@
     {tcp_listen_options, [{keepalive, true}]},
     {tcp_listeners, []},
     {ssl_listeners, [<%= @ssl_port %>]},
-    {ssl_options, [{certfile, "<%= @ssl_cert %>"},
+    {ssl_options, [{cacertfile, "<%= @ssl_cacert_file %>"},
+                   {certfile, "<%= @ssl_cert %>"},
                    {keyfile, "<%= @ssl_key %>"},
                    {verify, <%= @ssl_verify %>},
                    {fail_if_no_peer_cert, <%= @ssl_fail_if_no_peer_cert %>}]}
