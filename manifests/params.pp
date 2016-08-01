@@ -29,7 +29,8 @@ class rabbit::params {
   $ssl_server_crt                   = "rabbitmq-server.crt"
   $ssl_client_key                   = "rabbitmq-client.key"
   $ssl_client_crt                   = "rabbitmq-client.crt"
-  $ssl_cacert_file                  = "/etc/pki/ca-trust/source/anchors/elk_ca_cert.crt"
+  $ssl_selfsigned                   = hiera('ssl_self_signed_ca_cert')
+  $ssl_cacert_file                  = "/etc/pki/ca-trust/source/anchors/$ssl_selfsigned"
 
   $config_file                      = '/etc/rabbitmq/rabbitmq.config'
   $config_env_file                  = '/etc/rabbitmq/rabbitmq-env.conf'
