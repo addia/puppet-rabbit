@@ -87,6 +87,7 @@ class rabbit::config (
 
   notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
 
+  notify { "## --->>> value of facter: $::rabbitmq_plugins_done  and  config  ${configure_origin}  ":}
   if $::rabbitmq_plugins_done == 0 {
     if $configure_origin == true {
         include logreceiver
