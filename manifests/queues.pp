@@ -29,7 +29,7 @@ class rabbit::queues (
   $queue                            = "declare queue name=$logging_queue durable=true auto_delete=false"
   $binding                          = "declare binding source=$logging_exchange destination=$logging_queue routing_key=$logging_key destination_type=queue"
 
-  notify { "## --->>> Configuring users and queues: ${package_name}":
+# notify { "## --->>> Configuring users and queues: ${package_name}":
     } ~>
 
   rabbitmq_user { $default_user:
@@ -86,7 +86,7 @@ class rabbit::queues (
     mode                            => '0644',
     } ->
 
-  notify { "## --->>> Removing the guest user: ${package_name}":
+# notify { "## --->>> Removing the guest user: ${package_name}":
     } ~>
 
   exec { 'Removing the guest user' :

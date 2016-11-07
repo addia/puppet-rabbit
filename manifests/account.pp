@@ -18,7 +18,7 @@ class rabbit::account (
   $home_dir           = $rabbit::params::home_dir
   ) inherits rabbit::params {
 
-  notify { "## --->>> Creating accounts for: ${package_name}": }
+# notify { "## --->>> Creating accounts for: ${package_name}": }
 
   group {  $group:
     ensure            => $ensure,

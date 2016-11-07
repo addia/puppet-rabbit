@@ -169,7 +169,7 @@ class rabbit (
 
   ) inherits rabbit::params {
 
-    notify { "## --->>> Installing and configuring ${package_name}": }
+#   notify { "## --->>> Installing and configuring ${package_name}": }
 
     anchor { 'rabbit::begin': } ->
     class { '::rabbit::account': } ->

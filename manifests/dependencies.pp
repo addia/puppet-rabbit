@@ -17,13 +17,13 @@ class rabbit::dependencies (
   $package_name         = $rabbit::params::package_name
 ) inherits rabbit::params {
 
-  notify { "## --->>> Installing dependencies packages for: ${package_name}": }
+# notify { "## --->>> Installing dependencies packages for: ${package_name}": }
 
   package { 'selinux-policy-devel':
      ensure             => $ensure,
      }
 
-  notify { "## --->>> Installing release $er_version patches for Erlang ": }
+# notify { "## --->>> Installing release $er_version patches for Erlang ": }
   package { 'erlang':
      provider           => 'yum',
      ensure             => $er_version,

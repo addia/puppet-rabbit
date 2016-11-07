@@ -13,7 +13,7 @@ class rabbit::repo (
   $package_name       = $rabbit::params::package_name,
   ) inherits rabbit::params {
 
-  notify { "## --->>> Installing the epel repo for: ${package_name}": }
+# notify { "## --->>> Installing the epel repo for: ${package_name}": }
 
   case $::osfamily {
     'RedHat': {

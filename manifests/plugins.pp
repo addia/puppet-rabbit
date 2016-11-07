@@ -21,7 +21,7 @@ class rabbit::plugins (
 
   $plugins = ['rabbitmq_shovel_management','rabbitmq_shovel','rabbitmq_amqp1_0','rabbitmq_management_visualiser','rabbitmq_management']
 
-  notify { "## --->>> Installing plugins for package: ${package_name}":
+# notify { "## --->>> Installing plugins for package: ${package_name}":
   } ~>
 
   rabbitmq_plugin { $plugins:
@@ -33,7 +33,7 @@ class rabbit::plugins (
     path              => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
-  notify { "## --->>> Loading the plug-ins: ${package_name}":
+# notify { "## --->>> Loading the plug-ins: ${package_name}":
   } ~>
 
   exec { 'Loading the plug-ins' :
@@ -51,7 +51,7 @@ class rabbit::plugins (
     mode              => '0644',
   }
 
-  notify { "## --->>> Installing the admin tool for package: ${package_name}":}
+# notify { "## --->>> Installing the admin tool for package: ${package_name}":}
 
   file { "${admin_tool_dir}/${admin_tool}":
     ensure            => present,

@@ -61,7 +61,7 @@ class rabbit::config (
   $config_management_variables      = $rabbit::params::config_management_variables
 ) inherits rabbit::params {
 
-  notify { "## --->>> fixing and configuring the hosts names: ${package_name}": }
+# notify { "## --->>> fixing and configuring the hosts names: ${package_name}": }
 
   $rabbit_hostname                  = $::hostname
   $rabbit_domain                    = $::domain
@@ -85,9 +85,9 @@ class rabbit::config (
     host_aliases                    => [$rabbit_hostname, 'rabbit']
     }
 
-  notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
+# notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
 
-  notify { "## --->>> value of facter: $::rabbitmq_plugins_done  and  config  ${configure_origin}  ":}
+# notify { "## --->>> value of facter: $::rabbitmq_plugins_done  and  config  ${configure_origin}  ":}
   if $::rabbitmq_plugins_done == 0 {
     if $configure_origin == true {
         include logreceiver
@@ -95,7 +95,7 @@ class rabbit::config (
     }
 
 
-  notify { "## --->>> Creating config files for: ${package_name}": }
+# notify { "## --->>> Creating config files for: ${package_name}": }
 
   file { '/etc/rabbitmq':
     ensure                          => directory,

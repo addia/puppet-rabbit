@@ -17,7 +17,7 @@ class rabbit::install (
   $package_name            = $rabbit::params::package_name
 ) inherits rabbit::params {
 
-  notify { "## --->>> Installing package: ${package_name}-${version}${patch}": }
+# notify { "## --->>> Installing package: ${package_name}-${version}${patch}": }
 
   package { "${package_name}-${version}${patch}" :
     ensure                 => 'installed',
@@ -36,7 +36,7 @@ class rabbit::install (
     protocol               => 'tcp',
     }
 
-  notify { "## --->>> removing old sysvinit file instlled by: ${package_name}": }
+# notify { "## --->>> removing old sysvinit file instlled by: ${package_name}": }
 
   exec { 'stop old init script':
     command                => "systemctl disable ${package_name}",

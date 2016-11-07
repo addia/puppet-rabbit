@@ -13,7 +13,7 @@ class rabbit::service (
   $package_name                     = $rabbit::params::package_name
 ) inherits rabbit::params {
   
-  notify { "## --->>> Configuring service for: ${package_name}": } ~>
+# notify { "## --->>> Configuring service for: ${package_name}": } ~>
 
   exec { 'register new systemd script':
     command                         => "systemctl daemon-reload",

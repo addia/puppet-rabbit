@@ -19,7 +19,7 @@ class rabbit::cluster (
   ) inherits rabbit::params {
   
 
-  notify { "## --->>> Configuring the cluster: ${package_name}":
+# notify { "## --->>> Configuring the cluster: ${package_name}":
   }
 
   exec { 'set_the_cluster_name' :
