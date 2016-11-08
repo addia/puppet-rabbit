@@ -21,8 +21,7 @@ class rabbit::plugins (
 
   $plugins = ['rabbitmq_shovel_management','rabbitmq_shovel','rabbitmq_amqp1_0','rabbitmq_management_visualiser','rabbitmq_management']
 
-# notify { "## --->>> Installing plugins for package: ${package_name}":
-  } ~>
+# notify { "## --->>> Installing plugins for package: ${package_name}": } ~>
 
   rabbitmq_plugin { $plugins:
     ensure            => present,
@@ -33,8 +32,7 @@ class rabbit::plugins (
     path              => "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/",
   } ~>
 
-# notify { "## --->>> Loading the plug-ins: ${package_name}":
-  } ~>
+# notify { "## --->>> Loading the plug-ins: ${package_name}": } ~>
 
   exec { 'Loading the plug-ins' :
     command           => "systemctl restart ${package_name}",
