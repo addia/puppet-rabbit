@@ -11,18 +11,17 @@
 #
 class rabbit::install (
   $ensure                  = $rabbit::params::ensure,
-  $version                 = $rabbit::params::version,
-  $patch                   = $rabbit::params::patch,
+  $rabbit_package          = $rabbit::params::rabbit_package,
+  $rabbit_erlang           = $rabbit::params::rabbit_erlang,
   $ssl_management_port     = $rabbit::params::ssl_management_port,
   $package_name            = $rabbit::params::package_name
 ) inherits rabbit::params {
 
-# notify { "## --->>> Installing package: ${package_name}-${version}${patch}": }
+# notify { "## --->>> Installing package: ${package_name}": }
 
-  package { "${package_name}-${version}${patch}" :
-    ensure                 => 'installed',
-    provider               => 'rpm',
-    source                 => "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm",
+  $packages                = ['selinux-policy-devel','socat','${rabbit_erlang}','${rabbit_package}']
+  package { $packages:
+    ensure                 => $ensure,
   }
 
   selinux::module { 'rabbitmq':
@@ -34,7 +33,7 @@ class rabbit::install (
     context                => 'rabbitmq_port_t',
     port                   => $ssl_management_port,
     protocol               => 'tcp',
-    }
+  }
 
 # notify { "## --->>> removing old sysvinit file instlled by: ${package_name}": }
 

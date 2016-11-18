@@ -12,15 +12,16 @@
 class rabbit::params {
 
   $ensure                           = 'present'
-  $version                          = '3.5.7'
-  $er_version                       = 'R16B-03.17.el7'
+  $version                          = '3.6.5'
   $patch                            = '-1'
   $package_name                     = 'rabbitmq-server'
+  $rabbit_package                   = "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm"
+  $rabbit_erlang                    = "https://github.com/rabbitmq/erlang-rpm/releases/download/v1.3.0/erlang-18.3.4-1.el7.centos.x86_64.rpm"
   $user                             = 'rabbitmq'
   $group                            = 'rabbitmq'
   $uid                              = '250'
   $home_dir                         = '/var/lib/rabbitmq'
-  $repo_gpg_key                     = 'http://www.rabbitmq.com/rabbitmq-signing-key-public.asc'
+  $repo_gpg_key                     = 'http://www.rabbitmq.com/rabbitmq-release-signing-key.asc'
   $service_name                     = "${package_name}.service"
   $systemd_file                     = "/usr/lib/systemd/system/${service_name}"
   $service_file                     = "/usr/lib/systemd/system/${service_name}"

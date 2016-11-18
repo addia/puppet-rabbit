@@ -19,7 +19,8 @@ class rabbit::plugins (
   $package_name       = $rabbit::params::package_name
   ) inherits rabbit::params {
 
-  $plugins = ['rabbitmq_shovel_management','rabbitmq_shovel','rabbitmq_amqp1_0','rabbitmq_management_visualiser','rabbitmq_management']
+# $plugins = ['rabbitmq_shovel_management','rabbitmq_shovel','rabbitmq_amqp1_0','rabbitmq_management_visualiser','rabbitmq_management']
+  $plugins = ['rabbitmq_amqp1_0','rabbitmq_management_visualiser','rabbitmq_management','rabbitmq_top']
 
 # notify { "## --->>> Installing plugins for package: ${package_name}": } ~>
 
