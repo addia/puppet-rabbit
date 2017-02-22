@@ -10,30 +10,32 @@
 # ===========================
 #
 class rabbit::service (
-  $package_name                     = $rabbit::params::package_name
-) inherits rabbit::params {
-  
+  $package_name = $rabbit::params::package_name
+) {
+
+  include rabbit::params
+
 # notify { "## --->>> Configuring service for: ${package_name}": } ~>
 
   exec { 'register new systemd script':
-    command                         => "systemctl daemon-reload",
-    creates                         => "/var/lib/rabbitmq/.service_done",
-    path                            => "/sbin:/bin:/usr/sbin:/usr/bin",
+    command => 'systemctl daemon-reload',
+    creates => '/var/lib/rabbitmq/.service_done',
+    path    => '/sbin:/bin:/usr/sbin:/usr/bin',
     } ~>
 
   exec { 'activate new systemd script':
-    command                         => "systemctl enable ${package_name}",
-    creates                         => "/var/lib/rabbitmq/.service_done",
-    path                            => "/sbin:/bin:/usr/sbin:/usr/bin",
+    command => "systemctl enable ${package_name}",
+    creates => '/var/lib/rabbitmq/.service_done',
+    path    => '/sbin:/bin:/usr/sbin:/usr/bin',
     } ~>
 
   # Trap door to only allow service setup once
-  file { "/var/lib/rabbitmq/.service_done" :
-    ensure                          => present,
-    content                         => "service setup completed",
-    owner                           => $user,
-    group                           => $group,
-    mode                            => '0644',
+  file { '/var/lib/rabbitmq/.service_done' :
+    ensure  => present,
+    content => 'service setup completed',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     }
 
   }
