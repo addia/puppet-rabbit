@@ -7,11 +7,14 @@
   "source": "https://github.com/LandRegistry-Ops/puppet-rabbit",
   "project_page": "https://github.com/LandRegistry-Ops/puppet-rabbit",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">=3.0.0 <5.0.0"},
-    {"name":"puppetlabs-rabbitmq","version_requirement":">= 5.4.0"},
-    {"name":"nanliu/staging","version_requirement":">=1.0.3"},
-    {"name":"garethr/erlang","version_requirement":">= 0.3.0"},
-    {"name":"jfryman/selinux","version_requirement":">= 0.4.0"},
-    {"name":"maestrodev/wget","version_requirement":">= 1.7.3"}
+    {"name":"puppetlabs-stdlib","version_requirement":">=3.0.0 <5.0.0"},
+    {"name":"puppetlabs-rabbitmq","version_requirement":"= 5.6.0"},
+    {"name":"puppet-staging","version_requirement":"=2.2.0"},
+    {"name":"garethr-erlang","version_requirement":"= 0.3.0"},
+    {"name":"puppet-selinux","version_requirement":"= 0.8.0"},
+    {"name":"ceritsc-yum","version_requirement":"= 0.9.8"},
+    {"name":"stahnma-epel","version_requirement":"= 1.2.2"},
+    {"name":"puppetlabs-apt","version_requirement":"= 2.3.0"},
+    {"name":"maestrodev-wget","version_requirement":">= 1.7.3"}
   ]
 }
