@@ -18,7 +18,7 @@ class rabbit::account (
   $home_dir     = $rabbit::params::home_dir
   ) {
 
-  incluse rabbit::params
+  include rabbit::params
 
 # notify { "## --->>> Creating accounts for: ${package_name}": }
 
