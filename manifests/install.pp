@@ -22,7 +22,7 @@ class rabbit::install (
   notify { "## --->>> Installing package: ${package_name}": }
 
   Package { ensure => 'installed' }
-  $depends = ['selinux-policy-devel','socat']
+  $depends = ['socat']
   package { $depends: }
   package { $rabbit_erlang: }
   package { $rabbit_package: }
