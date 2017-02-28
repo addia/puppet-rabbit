@@ -205,7 +205,7 @@ class rabbit::config (
     owner   => $user,
     group   => $group,
     mode    => '0644',
-    content => hiera('elk_stack_rabbitmq_server_key')
+    content => hiera('rabbitmq_server_key')
   }
 
   file { $ssl_cert:
@@ -213,7 +213,7 @@ class rabbit::config (
     owner   => $user,
     group   => $group,
     mode    => '0644',
-    content => hiera('elk_stack_rabbitmq_server_cert')
+    content => hiera('rabbitmq_server_cert')
   }
 
   file { $ssl_ckey:
@@ -221,7 +221,7 @@ class rabbit::config (
     owner   => $user,
     group   => $group,
     mode    => '0644',
-    content => hiera('elk_stack_rabbitmq_client_key')
+    content => hiera('rabbitmq_client_key')
   }
 
   file { $ssl_ccert:
@@ -229,7 +229,7 @@ class rabbit::config (
     owner   => $user,
     group   => $group,
     mode    => '0644',
-    content => hiera('elk_stack_rabbitmq_client_cert')
+    content => hiera('rabbitmq_client_cert')
   }
 
 }
