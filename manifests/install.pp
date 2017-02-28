@@ -19,7 +19,7 @@ class rabbit::install (
 
   include rabbit::params
 
-# notify { "## --->>> Installing package: ${package_name}": }
+  notify { "## --->>> Installing package: ${package_name}": }
 
   Package { ensure => 'installed' }
   $depends = ['selinux-policy-devel','socat']

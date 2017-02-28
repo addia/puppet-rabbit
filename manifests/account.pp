@@ -16,11 +16,11 @@ class rabbit::account (
   $group        = $rabbit::params::group,
   $uid          = $rabbit::params::uid,
   $home_dir     = $rabbit::params::home_dir
-  ) {
+) {
 
   include rabbit::params
 
-# notify { "## --->>> Creating accounts for: ${package_name}": }
+  notify { "## --->>> Creating accounts for: ${package_name}": }
 
   group {  $group:
     ensure => $ensure,

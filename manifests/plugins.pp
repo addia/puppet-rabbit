@@ -17,13 +17,13 @@ class rabbit::plugins (
   $version        = $rabbit::params::version,
   $patch          = $rabbit::params::patch,
   $package_name   = $rabbit::params::package_name
-  ) {
+) {
 
   include rabbit::params
 
   $plugins = ['rabbitmq_amqp1_0','rabbitmq_management_visualiser','rabbitmq_management','rabbitmq_top']
 
-# notify { "## --->>> Installing plugins for package: ${package_name}": } ~>
+  notify { "## --->>> Installing plugins for package: ${package_name}": } ~>
 
   rabbitmq_plugin { $plugins:
     ensure => present,
@@ -34,7 +34,7 @@ class rabbit::plugins (
     path    => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/',
   } ~>
 
-# notify { "## --->>> Loading the plug-ins: ${package_name}": } ~>
+  notify { "## --->>> Loading the plug-ins: ${package_name}": } ~>
 
   exec { 'Loading the plug-ins' :
     command => "systemctl restart ${package_name}",
@@ -51,7 +51,7 @@ class rabbit::plugins (
     mode    => '0644',
   }
 
-# notify { "## --->>> Installing the admin tool for package: ${package_name}":}
+  notify { "## --->>> Installing the admin tool for package: ${package_name}":}
 
   file { "${admin_tool_dir}/${admin_tool}":
     ensure => present,

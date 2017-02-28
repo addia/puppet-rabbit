@@ -63,69 +63,69 @@ class rabbit::config (
 
   include rabbit::params
 
-# notify { "## --->>> fixing and configuring the hosts names: ${package_name}": }
+  notify { "## --->>> fixing and configuring the hosts names: ${package_name}": }
 
   $rabbit_hostname     = $::hostname
   $rabbit_domain       = $::domain
   if $cluster_data_nic == 'eth0' {
     $rabbit_ip         = $::ipaddress_eth0
-    }
+  }
   if $cluster_data_nic == 'eth1' {
     $rabbit_ip         = $::ipaddress_eth1
-    }
+  }
 
   exec { 'fix_the_hostname_pants':
     command => 'cat /etc/hosts | tr [:upper:] [:lower:] > /tmp/hh; mv -f /tmp/hh /etc/hosts',
     onlyif  => "grep -v '^#' /etc/hosts | grep -q -e '[[:upper:]]'",
     path    => '/sbin:/bin:/usr/sbin:/usr/bin',
-    }
+  }
 
   host { "${rabbit_hostname}.${rabbit_domain}":
     ensure       => 'present',
     target       => '/etc/hosts',
     ip           => $rabbit_ip,
     host_aliases => [$rabbit_hostname, 'rabbit']
-    }
+  }
 
-# notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
+  notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
 
-# notify { "## --->>> value of facter: $::rabbitmq_plugins_done  and  config  ${configure_origin}  ":}
+  notify { "## --->>> value of facter: $::rabbitmq_plugins_done  and  config  ${configure_origin}  ":}
   if $::rabbitmq_plugins_done == 0 {
     if $configure_origin == true {
         include logreceiver
-      }
     }
+  }
 
 
-# notify { "## --->>> Creating config files for: ${package_name}": }
+  notify { "## --->>> Creating config files for: ${package_name}": }
 
   file { '/etc/rabbitmq':
     ensure => directory,
     owner  => $user,
     group  => $group,
     mode   => '0755',
-    }
+  }
 
   file { '/var/lib/rabbitmq':
     ensure => directory,
     owner  => $user,
     group  => $group,
     mode   => '0755',
-    }
+  }
 
   file { '/var/log/rabbitmq':
     ensure => directory,
     owner  => $user,
     group  => $group,
     mode   => '0755',
-    }
+  }
 
   file { '/run/rabbitmq':
     ensure => directory,
     owner  => $user,
     group  => $group,
     mode   => '0755',
-    }
+  }
 
   file { $config_env_file:
     ensure  => file,
@@ -133,7 +133,7 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => template('rabbit/rabbitmq_env_config.erb'),
-    }
+  }
 
   file { "${admin_tool_dir}/${admin_help}":
     ensure  => file,
@@ -141,7 +141,7 @@ class rabbit::config (
     group   => 'root',
     mode    => '0755',
     content => template('rabbit/rabbit_admin_sh.erb'),
-    }
+  }
 
   file { $config_adm_file:
     ensure  => file,
@@ -149,7 +149,7 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => template('rabbit/rabbitmqadmin_conf.erb'),
-    }
+  }
 
   file { $config_file:
     ensure  => file,
@@ -157,7 +157,7 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => template('rabbit/rabbitmq_config.erb'),
-    }
+  }
 
   file { $service_file:
     ensure  => file,
@@ -166,7 +166,7 @@ class rabbit::config (
     group   => 'root',
     mode    => '0644',
     source  => 'puppet:///modules/rabbit/rabbitmq-server.service',
-    }
+  }
 
   file { $limits_file:
     ensure  => file,
@@ -174,7 +174,7 @@ class rabbit::config (
     group   => 'root',
     mode    => '0644',
     content => template('rabbit/30-rabbit_conf.erb'),
-    }
+  }
 
   file { $erlang_cookie_file:
     ensure  => file,
@@ -183,7 +183,7 @@ class rabbit::config (
     group   => $group,
     mode    => '0600',
     content => template('rabbit/erlang_cookie.erb'),
-    }
+  }
 
   file { $tmpfile:
     ensure => file,
@@ -191,14 +191,14 @@ class rabbit::config (
     group  => 'root',
     mode   => '0644',
     source => 'puppet:///modules/rabbit/tmpfiles_rabbitmq.conf',
-    }
+  }
 
   file { $ssl_dir:
     ensure => 'directory',
     owner  => $user,
     group  => $group,
     mode   => '0750',
-    }
+  }
 
   file { $ssl_key:
     ensure  => file,
@@ -206,7 +206,7 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => hiera('elk_stack_rabbitmq_server_key')
-    }
+  }
 
   file { $ssl_cert:
     ensure  => file,
@@ -214,7 +214,7 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => hiera('elk_stack_rabbitmq_server_cert')
-    }
+  }
 
   file { $ssl_ckey:
     ensure  => file,
@@ -222,7 +222,7 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => hiera('elk_stack_rabbitmq_client_key')
-    }
+  }
 
   file { $ssl_ccert:
     ensure  => file,
@@ -230,9 +230,9 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => hiera('elk_stack_rabbitmq_client_cert')
-    }
-
   }
 
+}
 
-# via: set ts=2 sw=2 et :
+
+# vim: set ts=2 sw=2 et :

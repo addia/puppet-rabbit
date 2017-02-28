@@ -169,9 +169,11 @@ class rabbit (
   $config_kernel_variables     = $rabbit::params::config_kernel_variables,
   $config_management_variables = $rabbit::params::config_management_variables
 
-  ) inherits rabbit::params {
+) {
 
-#   notify { "## --->>> Installing and configuring ${package_name}": }
+  include rabbit::params
+
+    notify { "## --->>> Installing and configuring ${package_name}": }
 
     anchor { 'rabbit::begin': } ->
     class { '::rabbit::account': } ->

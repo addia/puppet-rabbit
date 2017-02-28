@@ -16,7 +16,7 @@ class rabbit::cluster (
   $default_vhost = $rabbit::params::default_vhost,
   $cluster_name  = $rabbit::params::cluster_name,
   $package_name  = $rabbit::params::package_name
-  ) {
+) {
 
   include rabbit::params
 
