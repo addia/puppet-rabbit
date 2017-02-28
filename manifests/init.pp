@@ -177,7 +177,6 @@ class rabbit (
 
     anchor { 'rabbit::begin': } ->
     class { '::rabbit::account': } ->
-    class { '::rabbit::dependencies': } ->
     class { '::rabbit::install': } ->
     class { '::rabbit::config': } ->
     class { '::rabbit::service': } ->
