@@ -23,7 +23,10 @@ class rabbit::install (
   Package { ensure => 'installed' }
   $depends = ['socat', 'erlang']
   package { $depends: }
-  package { $rabbit_package: }
+  package { 'rabbit_server':
+    source   => $rabbit_package,
+    provider => 'rpm',
+  }
 
   selinux::module { 'rabbitmq':
     ensure => 'present',
