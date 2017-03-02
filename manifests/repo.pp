@@ -12,7 +12,6 @@
 class rabbit::repo (
   $erlang_repo   = $rabbit::params::erlang_repo,
   $erlang_gpgkey = $rabbit::params::erlang_gpgkey,
-  $rabbit_gpgkey = $rabbit::params::rabbit_gpgkey,
   $package_name  = $rabbit::params::package_name
 ) {
 
@@ -20,12 +19,16 @@ class rabbit::repo (
 
   notify { "Creating repo for: ${package_name}": }
 
+
+  # this installs the shiny new Erlang repo:
   case $::osfamily {
     'RedHat': {
-      Package { ensure => 'installed' }
-      package { $erlang_repo: }
-      package { $erlang_gpgkey: }
-      package { $rabbit_gpgkey: }
+      exec { 'Import Erlang key':
+        command  => "rpm --import ${erlang_gpgkey}"
+      }
+      package { $erlang_repo:
+        ensure => 'installed'
+      }
     }
 
     default: {
