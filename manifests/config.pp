@@ -146,6 +146,13 @@ class rabbit::config (
     content => template('rabbit/erlang_cookie.erb'),
   }
 
+  file { '/run/rabbitmq':
+    ensure => 'directory',
+    owner  => $user,
+    group  => $group,
+    mode   => '0750',
+  }
+
   file { $ssl_dir:
     ensure => 'directory',
     owner  => $user,
