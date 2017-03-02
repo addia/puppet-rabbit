@@ -43,8 +43,6 @@ class rabbit::config (
   $admin_port                  = $rabbit::params::admin_port,
   $config_file                 = $rabbit::params::config_file,
   $limits_file                 = $rabbit::params::limits_file,
-  $service_file                = $rabbit::params::service_file,
-  $tmpfile                     = $rabbit::params::tmpfile,
   $file_limit                  = $rabbit::params::file_limit,
   $cluster_node_type           = $rabbit::params::cluster_node_type,
   $cluster_data_nic            = $rabbit::params::cluster_data_nic,
@@ -131,15 +129,6 @@ class rabbit::config (
     content => template('rabbit/rabbitmq_config.erb'),
   }
 
-  file { $service_file:
-    ensure  => file,
-    replace => false,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/rabbit/rabbitmq-server.service',
-  }
-
   file { $limits_file:
     ensure  => file,
     owner   => 'root',
@@ -155,14 +144,6 @@ class rabbit::config (
     group   => $group,
     mode    => '0600',
     content => template('rabbit/erlang_cookie.erb'),
-  }
-
-  file { $tmpfile:
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    source => 'puppet:///modules/rabbit/tmpfiles_rabbitmq.conf',
   }
 
   file { $ssl_dir:
