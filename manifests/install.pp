@@ -30,8 +30,9 @@ class rabbit::install (
 
   # install the real thing:
   exec { 'Import Rabbit key':
-    command  => "rpm --import ${rabbit_gpgkey}"
-  }
+    command => "rpm --import ${rabbit_gpgkey}",
+    unless  => "rpm -q ${package_name}",
+  } ~>
   package { 'rabbit_server':
     source   => $rabbit_package,
     provider => 'rpm',
