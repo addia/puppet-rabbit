@@ -36,7 +36,6 @@ class rabbit::params {
   $config_env_file                  = '/etc/rabbitmq/rabbitmq-env.conf'
   $config_adm_file                  = '/etc/rabbitmq/rabbitmqadmin.conf'
   $limits_file                      = '/etc/security/limits.d/30-rabbit.conf'
-  $tmpfile                          = '/usr/lib/tmpfiles.d/rabbitmq.conf'
   $config_cluster                   = true
   $config_admin                     = true
   $configure_origin                 = hiera('rabbitmq_origin_conf')
