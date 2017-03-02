@@ -89,7 +89,7 @@ class rabbit::config (
 
   notify { "## --->>> Preparing the origin config variables for: ${package_name}": }
 
-  notify { "## --->>> value of facter: ${::rabbitmq_plugins_doner}  and  config  ${configure_origin}  ":}
+  notify { "## --->>> value of facter: ${::rabbitmq_plugins_done}  and  config  ${configure_origin}  ":}
   if $::rabbitmq_plugins_done == 0 {
     if $configure_origin == true {
         include logreceiver
@@ -98,34 +98,6 @@ class rabbit::config (
 
 
   notify { "## --->>> Creating config files for: ${package_name}": }
-
-  file { '/etc/rabbitmq':
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
-  }
-
-  file { '/var/lib/rabbitmq':
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
-  }
-
-  file { '/var/log/rabbitmq':
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
-  }
-
-  file { '/run/rabbitmq':
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
-  }
 
   file { $config_env_file:
     ensure  => file,
@@ -230,6 +202,21 @@ class rabbit::config (
     group   => $group,
     mode    => '0644',
     content => hiera('rabbitmq_client_cert')
+  }
+
+  exec { 'Loading the configs' :
+    command => "systemctl enable ${package_name}; systemctl start ${package_name}",
+    creates => '/var/lib/rabbitmq/.configs_done',
+    path    => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/',
+  } ~>
+
+  # Trap door to only allow configs setup once
+  file { '/var/lib/rabbitmq/.configs_done' :
+    ensure  => present,
+    content => 'configs setup completed',
+    owner   => $user,
+    group   => $group,
+    mode    => '0644',
   }
 
 }

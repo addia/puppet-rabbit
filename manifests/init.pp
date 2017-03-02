@@ -13,17 +13,17 @@
 #     ensure                           = package install option
 #     version                          = version we want to install
 #     patch                            = and the patch to install
+#     rpm_arch                         = Architecture to install
 #     package_name                     = the package name
 #     rabbit_package                   = the rabbit_package
-#     rabbit_erlang                    = the erlang dependencies for rabbitmq
+#     rabbit_gpgkey                    = the rabbitmq gpg key
+#     erlang_repo                      = the erlang yum repository installer
+#     erlang_gpgkey                    = the erlang gpg key
 #     user                             = run as user
 #     group                            = run as group
 #     uid                              = default uid/gid
 #     home_dir                         = rabbitmq-server home directory
 #     repo_gpg_key                     = package gpg signing key
-#     service_name                     = name of the service file for the package
-#     systemd_file                     = full path and file name of systemd
-#     service_file                     = full path and file name of service
 #     ssl_server_key                   = the rabbitmq-server key file name
 #     ssl_server_crt                   = the rabbitmq-server cert file name
 #     ssl_client_key                   = the rabbitmq-client key file name
@@ -101,16 +101,17 @@ class rabbit (
   $ensure                      = $rabbit::params::ensure,
   $version                     = $rabbit::params::version,
   $patch                       = $rabbit::params::patch,
+  $rpm_arch                    = $rabbit::params::rpm_arch,
   $package_name                = $rabbit::params::package_name,
   $rabbit_package              = $rabbit::params::rabbit_package,
-  $rabbit_erlang               = $rabbit::params::rabbit_erlang,
+  $rabbit_gpgkey               = $rabbit::params::rabbit_gpgkey,
+  $erlang_repo                 = $rabbit::params::erlang_repo,
+  $erlang_gpgkey               = $rabbit::params::erlang_gpgkey,
   $user                        = $rabbit::params::user,
   $group                       = $rabbit::params::group,
   $uid                         = $rabbit::params::uid,
   $home_dir                    = $rabbit::params::home_dir,
   $repo_gpg_key                = $rabbit::params::repo_gpg_key,
-  $service_name                = $rabbit::params::service_name,
-  $systemd_file                = $rabbit::params::systemd_file,
   $ssl_server_key              = $rabbit::params::ssl_server_key,
   $ssl_server_crt              = $rabbit::params::ssl_server_crt,
   $ssl_client_key              = $rabbit::params::ssl_client_key,
@@ -179,7 +180,6 @@ class rabbit (
     class { '::rabbit::account': } ->
     class { '::rabbit::install': } ->
     class { '::rabbit::config': } ->
-    class { '::rabbit::service': } ->
     class { '::rabbit::plugins': } ->
     class { '::rabbit::queues': } ->
     class { '::rabbit::cluster': } ->

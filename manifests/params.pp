@@ -14,17 +14,16 @@ class rabbit::params {
   $ensure                           = 'present'
   $version                          = '3.6.6'
   $patch                            = '-1'
+  $rpm_arch                         = 'el7.noarch'
   $package_name                     = 'rabbitmq-server'
-  $rabbit_package                   = "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.noarch.rpm"
-  $rabbit_erlang                    = 'https://github.com/rabbitmq/erlang-rpm/releases/download/v1.3.0/erlang-18.3.4-1.el7.centos.x86_64.rpm'
+  $rabbit_package                   = "https://www.rabbitmq.com/releases/${package_name}/v${version}/${package_name}-${version}${patch}.${rpm_arch}.rpm"
+  $rabbit_gpgkey                    = 'https://www.rabbitmq.com/rabbitmq-release-signing-key.asc'
+  $erlang_repo                      = 'https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm'
+  $erlang_gpgkey                    = 'https://packages.erlang-solutions.com/rpm/erlang_solutions.asc'
   $user                             = 'rabbitmq'
   $group                            = 'rabbitmq'
   $uid                              = '250'
   $home_dir                         = '/var/lib/rabbitmq'
-  $repo_gpg_key                     = 'http://www.rabbitmq.com/rabbitmq-release-signing-key.asc'
-  $service_name                     = "${package_name}.service"
-  $systemd_file                     = "/usr/lib/systemd/system/${service_name}"
-  $service_file                     = "/usr/lib/systemd/system/${service_name}"
 
   $ssl_server_key                   = 'rabbitmq-server.key'
   $ssl_server_crt                   = 'rabbitmq-server.crt'
