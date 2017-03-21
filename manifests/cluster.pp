@@ -10,7 +10,6 @@
 # ===========================
 #
 class rabbit::cluster (
-  $ensure        = $rabbit::params::ensure,
   $user          = $rabbit::params::user,
   $group         = $rabbit::params::group,
   $default_vhost = $rabbit::params::default_vhost,

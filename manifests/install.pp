@@ -10,7 +10,6 @@
 # ===========================
 #
 class rabbit::install (
-  $ensure              = $rabbit::params::ensure,
   $rabbit_gpgkey       = $rabbit::params::rabbit_gpgkey,
   $rabbit_package      = $rabbit::params::rabbit_package,
   $ssl_management_port = $rabbit::params::ssl_management_port,

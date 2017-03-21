@@ -10,7 +10,6 @@
 # ===========================
 #
 class rabbit::queues (
-  $ensure           = $rabbit::params::ensure,
   $user             = $rabbit::params::user,
   $group            = $rabbit::params::group,
   $default_user     = $rabbit::params::default_user,
@@ -45,7 +44,7 @@ class rabbit::queues (
   } ~>
 
   rabbitmq_vhost { $default_vhost:
-    ensure => $ensure,
+    ensure => present,
   } ~>
 
   rabbitmq_user_permissions { "${default_user}@${default_vhost}":

@@ -10,7 +10,6 @@
 # Document all Parameters:
 #
 #   Explanation of what this parameter affects and what it defaults to.
-#     ensure                           = package install option
 #     version                          = version we want to install
 #     patch                            = and the patch to install
 #     rpm_arch                         = Architecture to install
@@ -98,7 +97,6 @@
 #
 #
 class rabbit (
-  $ensure                      = $rabbit::params::ensure,
   $version                     = $rabbit::params::version,
   $patch                       = $rabbit::params::patch,
   $rpm_arch                    = $rabbit::params::rpm_arch,

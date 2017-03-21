@@ -10,7 +10,6 @@
 # ===========================
 #
 class rabbit::account (
-  $ensure       = $rabbit::params::ensure,
   $package_name = $rabbit::params::package_name,
   $user         = $rabbit::params::user,
   $group        = $rabbit::params::group,
@@ -23,12 +22,12 @@ class rabbit::account (
   notify { "## --->>> Creating accounts for: ${package_name}": }
 
   group {  $group:
-    ensure => $ensure,
+    ensure => present,
     gid    => $uid
   }
 
   user { $user:
-    ensure     => $ensure,
+    ensure     => present,
     home       => $home_dir,
     shell      => '/bin/bash',
     uid        => $uid,
