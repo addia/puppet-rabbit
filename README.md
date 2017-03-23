@@ -126,7 +126,7 @@ root_ca_cert: |
 # -----------------------------------------------------------------------------
 #
 # this is a self signed vagrant_development key.
-# md5sum : 
+# md5sum :
 #
 rabbitmq_origin_key: |
   -----BEGIN RSA PRIVATE KEY-----
@@ -134,7 +134,7 @@ rabbitmq_origin_key: |
   -----END RSA PRIVATE KEY-----
 
 # this is a self signed vagrant_development crt.
-# md5sum : 
+# md5sum :
 #
 rabbitmq_origin_cert: |
   -----BEGIN CERTIFICATE-----
@@ -148,9 +148,10 @@ rabbitmq_origin_cert: |
 
 Follow the guide on the [Cloud Wiki](https://webops-cloud.diti.lr.net/WebOps_Cloud_Wiki/openssh_openssl_server_certs).
 
+First the server: Watch out for the little word **server** !!!
+
 ```
 
-First the server: Watch out for the little word **server** !!
 export SERVICE=rabbit-server
 --->>> create or re-use the key, see guide.
 
@@ -165,7 +166,12 @@ openssl req -config ./conf/openssl-req.conf -new -key ${SERVICE_KEY} -out ${SERV
 --->>> get the cert signed or self-sign, see guide.
 openssl ca -batch -notext -config ./conf/openssl-sign.cnf -in ${SERVICE}.req -out ${SERVICE}.crt  -extensions server_ca_extensions
 
-second, repeat all, replacing every 'server' with 'client' !!!
+```
+
+Second the client:, repeat all, replacing every **server** with **client** !!!
+
+```
+
 export SERVICE=rabbit-client
 --->>> create or re-use the key, see guide.
 
@@ -178,6 +184,21 @@ openssl req -config ./conf/openssl-req.conf -new -key ${SERVICE_KEY} -out ${SERV
 
 --->>> get the cert signed or self-sign, see guide.
 openssl ca -batch -notext -config ./conf/openssl-sign.cnf -in ${SERVICE}.req -out ${SERVICE}.crt  -extensions client_ca_extensions
+
+```
+
+##### Next part is testing the certs.
+
+Copy the server certs to a machine with an IP mentioned in the server certificate. Then copy the client certs to a different server with an IP mentioned in the client certificate.
+On the server run the following command:
+`openssl s_server -accept 8443 -cert /etc/rabbitmq/ssl/rabbitmq-server.crt -key /etc/rabbitmq/ssl/rabbitmq-server.key`
+
+The initial utput is:
+`Using default temp DH parameters
+Using default temp ECDH parameters
+ACCEPT`
+
+```
 
 ```
 
