@@ -144,11 +144,11 @@ rabbitmq_origin_cert: |
 ```
 
 
-##### Creating a certificate for a rabbitmq cluster ( beware a certificate error costs loads of hours of debugging !! )
+#### Creating a certificate for a rabbitmq cluster ( beware a certificate error costs loads of hours of debugging !! )
 
 Follow the guide on the [Cloud Wiki](https://webops-cloud.diti.lr.net/WebOps_Cloud_Wiki/openssh_openssl_server_certs).
 
-First the server: Watch out for the little word **server** !!!
+##### First the server: Watch out for the little word **server** !!!
 
 ```
 
@@ -168,7 +168,7 @@ openssl ca -batch -notext -config ./conf/openssl-sign.cnf -in ${SERVICE}.req -ou
 
 ```
 
-Second the client:, repeat all, replacing every **server** with **client** !!!
+##### Second the client:, repeat all, replacing every **server** with **client** !!!
 
 ```
 
@@ -211,13 +211,17 @@ Both sides have now more or less blurb. If nothing is being printed on the scree
 On the server the last line should say: (otherwise: revoke the certs and start again)
 ```
 Secure Renegotiation IS supported
-
 ```
 
 On the client the last line should say: (otherwise: revoke the certs and start again)
 ```
 Verify return code: 0 (ok)
 ```
+
+##### Last hurdle to pass is the Puppet run.
+
+When the puppet run fails to create the exchange and the queue, run puppet again with full debug and try to spot the error. If it is something like cert error or server name error you highly likely have a mistake in the hosts file, the DNS and the SUB_ALT names in the certificate. Check that all matches up correctly and if necessary revoke the certs and start again.
+
 
 
 
