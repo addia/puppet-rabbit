@@ -190,13 +190,17 @@ openssl ca -batch -notext -config ./conf/openssl-sign.cnf -in ${SERVICE}.req -ou
 ##### Next part is testing the certs.
 
 Copy the server certs to a machine with an IP mentioned in the server certificate. Then copy the client certs to a different server with an IP mentioned in the client certificate.
+
 On the server run the following command:
+
 `openssl s_server -accept 8443 -cert /etc/rabbitmq/ssl/rabbitmq-server.crt -key /etc/rabbitmq/ssl/rabbitmq-server.key`
 
 The initial utput is:
-`Using default temp DH parameters
+```
+Using default temp DH parameters
 Using default temp ECDH parameters
-ACCEPT`
+ACCEPT
+```
 
 ```
 
