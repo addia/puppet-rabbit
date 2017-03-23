@@ -202,9 +202,24 @@ Using default temp ECDH parameters
 ACCEPT
 ```
 
+The next command need to be run on the client:
+
+`openssl s_client -connect <server_ip>:8443 -cert /etc/rabbitmq/ssl/rabbitmq-client.crt -key /etc/rabbitmq/ssl/rabbitmq-client.key`
+
+Both sides have now more or less blurb. If nothing is being printed on the screens, revoke the certs and start again.
+
+On the server the last line should say: (otherwise: revoke the certs and start again)
 ```
+Secure Renegotiation IS supported
 
 ```
+
+On the client the last line should say: (otherwise: revoke the certs and start again)
+```
+Verify return code: 0 (ok)
+```
+
+
 
 ### License
 
