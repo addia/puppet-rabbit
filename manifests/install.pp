@@ -21,16 +21,16 @@ class rabbit::install (
   notify { "## --->>> Installing package: ${package_name}": }
 
 
-  # install dependencies first:
+  # force the install of dependencies first:
   Package { ensure => 'installed' }
   $depends = ['socat', 'erlang']
-  package { $depends: }
-
+  package { $depends: } ~>
 
   # install the real thing:
   exec { 'Import Rabbit key':
     command => "rpm --import ${rabbit_gpgkey}; rpm -i ${rabbit_package}",
     unless  => "rpm -q ${package_name}",
+    path    => '/sbin:/bin:/usr/sbin:/usr/bin'
   }
 
 

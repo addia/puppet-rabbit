@@ -13,8 +13,7 @@ Vagrant.configure(2) do |conf|
     sed -i -e 's,#PermitRootLogin,PermitRootLogin,g' /etc/ssh/sshd_config
     cp /vagrant/tests/hosts.vagrant.conf /etc/hosts
     systemctl restart sshd
-    yum install -y git
-    yum install -y telnet
+    yum install -y git telnet
     puppet module install puppetlabs-vcsrepo
     puppet module install puppetlabs-stdlib
     puppet module install puppetlabs-rabbitmq

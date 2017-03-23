@@ -1,5 +1,5 @@
 
-module rabbitmq_local 1.0.2;
+module rabbitmq 1.0.2;
 
 require {
 	type rabbitmq_t;

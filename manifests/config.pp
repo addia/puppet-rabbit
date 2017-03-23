@@ -12,6 +12,9 @@
 class rabbit::config (
   $user                        = $rabbit::params::user,
   $group                       = $rabbit::params::group,
+  $default_user                = $rabbit::params::default_user,
+  $default_pass                = $rabbit::params::default_pass,
+  $default_vhost               = $rabbit::params::default_vhost,
   $ssl_server_key              = $rabbit::params::ssl_server_key,
   $ssl_server_crt              = $rabbit::params::ssl_server_crt,
   $ssl_client_key              = $rabbit::params::ssl_client_key,
@@ -192,10 +195,24 @@ class rabbit::config (
     content => hiera('rabbitmq_client_cert')
   }
 
+  file { $ssl_cacert_file:
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => hiera('root_ca_cert')
+  }
+
+  exec { 'Loading the cacert' :
+    command => "update-ca-trust",
+    creates => '/var/lib/rabbitmq/.caroot_done',
+    path    => '/sbin:/bin:/usr/sbin:/usr/bin:/bin/:/sbin/',
+  }
+
   exec { 'Loading the configs' :
     command => "systemctl enable ${package_name}; systemctl start ${package_name}",
     creates => '/var/lib/rabbitmq/.configs_done',
-    path    => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/:/bin/:/sbin/',
+    path    => '/sbin:/bin:/usr/sbin:/usr/bin:/bin/:/sbin/',
   } ~>
 
   # Trap door to only allow configs setup once

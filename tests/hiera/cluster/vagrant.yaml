@@ -8,11 +8,9 @@ rabbitmq_clustername: addis-rabbit-cluster
 
 rabbitmq_data_nic:  eth1
 
-rabbitmq_address: rabbit1
+rabbitmq_master: server3.abel.de.com
 
-rabbitmq_master: rabbit1
-
-rabbitmq_servers:  ['rabbit1', 'rabbit2', 'rabbit3']
+rabbitmq_servers:  ['server3.abel.de.com', 'server4.abel.de.com', 'server5.abel.de.com']
 
 rabbitmq_cookie:  "52J3TP2U765WLRZPVF4M"
 
@@ -21,14 +19,6 @@ rabbitmq_passwd:  "CXTD6EMPJW2HYK58"
 logstash_passwd:  "3CB54FY3JKXTRG5J"
 
 logstash_key:  "T7GP7649PBRANMN3"
-
-rabbitmq_origin_conf: false
-
-rabbitmq_origin: undef
-
-rabbitmq_origin_passwd: undef
-
-rabbitmq_origin_passkey: undef
 
 
 

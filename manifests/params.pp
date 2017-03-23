@@ -36,7 +36,7 @@ class rabbit::params {
   $limits_file                      = '/etc/security/limits.d/30-rabbit.conf'
   $config_cluster                   = true
   $config_admin                     = true
-  $configure_origin                 = hiera('rabbitmq_origin_conf')
+  $configure_origin                 = hiera('rabbitmq_origin_conf',false)
   $admin_help                       = 'rabbit_admin.sh'
   $admin_tool                       = 'rabbitmqadmin'
   $admin_tool_dir                   = '/usr/local/bin'
@@ -45,7 +45,6 @@ class rabbit::params {
   $cluster_node_type                = 'disc'
   $cluster_data_nic                 = hiera('rabbitmq_data_nic')
   $cluster_name                     = hiera('rabbitmq_clustername')
-  $rabbit_address                   = hiera('rabbitmq_address')
   $cluster_master                   = hiera('rabbitmq_master')
   $cluster_nodes                    = hiera('rabbitmq_servers')
   $cluster_partition_handling       = 'ignore'
