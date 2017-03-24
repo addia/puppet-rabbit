@@ -56,7 +56,14 @@ logstash_key:  "T7GP7649PBRANMN3"          <<<---16 charecters
 | rabbitmq_origin | The default is undef, the rabbit cluster address to pull the queue from
 | rabbitmq_origin_passwd | The default is undef, the remote rabbit cluster password
 | rabbitmq_origin_passkey | The default is undef, the remote rabbit cluster key
-
+| **Certificate usage** | only if SSL/TLS has been enabled | --- |
+| rabbitmq_server_key | The OpenSSL server key
+| rabbitmq_server_cert | The OpenSSL server certificate, this key pair is use for the cluster communication and queue sync.
+| rabbitmq_client_key | The OpenSSL client key
+| rabbitmq_client_cert | The OpenSSL client certificate, this key pair is needed to gain access to the rabbitmq server or cluster.
+| rabbitmq_origin_key | The OpenSSL remote client key
+| rabbitmq_origin_cert | The OpenSSL remote client certificate, this key pair is needed to gain access to a remote server or cluster.
+| root_ca_cert | The OpenSSL CA signing certificate is required to verify the certoificate signatures.
 
 ##### Also create a YAML file in the secrets repo inside the 'network_location' folder to provide the cwcertificate variables for the cluster using the following basic examples:
 
@@ -67,7 +74,7 @@ logstash_key:  "T7GP7649PBRANMN3"          <<<---16 charecters
 
 
 # this is a self signed vagrant_development key.
-# md5sum : 368e44433b6dafad89c2093b967662f3  rabbit-server.key
+# md5sum : _<md5sum>_  rabbit-server.key
 #
 rabbitmq_server_key: |
   -----BEGIN RSA PRIVATE KEY-----
@@ -75,7 +82,7 @@ rabbitmq_server_key: |
   -----END RSA PRIVATE KEY-----
 
 # this is a self signed vagrant_development cert.
-# md5sum : 420106c5697abc599f6ea8024341286a  rabbit-server.crt
+# md5sum : _<md5sum>_  rabbit-server.crt
 #
 rabbitmq_server_cert: |
   -----BEGIN CERTIFICATE-----
@@ -83,7 +90,7 @@ rabbitmq_server_cert: |
   -----END CERTIFICATE-----
 
 # this is a self signed vagrant_development key.
-# md5sum : af092350308c45fc51a328d0cb96279d  rabbit-client.key
+# md5sum : _<md5sum>_  rabbit-client.key
 #
 rabbitmq_client_key: |
   -----BEGIN RSA PRIVATE KEY-----
@@ -91,31 +98,15 @@ rabbitmq_client_key: |
   -----END RSA PRIVATE KEY-----
 
 # this is a self signed v3yyagrant_development cert.
-# md5sum : a23dacf1f025feface250519219ee870  rabbit-client.crt
+# md5sum : _<md5sum>_  rabbit-client.crt
 #
 rabbitmq_client_cert: |
   -----BEGIN CERTIFICATE-----
   bla bla bla
   -----END CERTIFICATE-----
 
-# this is a self signed vagrant_development key.
-# md5sum : a833b812125330a094178fe7ad20d591  vagrant_devel.key
-#
-els_elastic_key: |
-  -----BEGIN RSA PRIVATE KEY-----
-  bla bla bla
-  -----END RSA PRIVATE KEY-----
-
-# this is a self signed vagrant_development cert.
-# md5sum : a28335250a72ef55e671b3db355ccc50  vagrant_devel.crt
-#
-els_elastic_cert: |
-  -----BEGIN CERTIFICATE-----
-  bla bla bla
-  -----END CERTIFICATE-----
-
 # this is a self sign root CA cert.
-# md5sum : b19458bf253b9ddb1d1715af166e80bd  root_cacert.pem
+# md5sum : _<md5sum>_  root_cacert.pem
 #
 root_ca_cert: |
   -----BEGIN CERTIFICATE-----
@@ -147,6 +138,7 @@ rabbitmq_origin_cert: |
 #### Creating a certificate for a rabbitmq cluster ( beware a certificate error costs loads of hours of debugging !! )
 
 Follow the guide on the [Cloud Wiki](https://webops-cloud.diti.lr.net/WebOps_Cloud_Wiki/openssh_openssl_server_certs).
+Obviouesly, the server names and IP addresses are listed for demonstration puposes only. Replace them to fit your environment.
 
 ##### First the server: Watch out for the little word **server** !!!
 
