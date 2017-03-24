@@ -243,6 +243,19 @@ Should this not happen, it can be a painful process to find out what isn't corre
 https://www.rabbitmq.com/clustering.html
 
 
+##### Monitoring, Managing etc
+
+Since it is rather complicated to use the provided rabbitmqadmin tool when TLS is enabled, I wrote a little wrapper script providing every variable required.
+This little wrapper script is also used in my puppet module to set-up the exchange and queue.
+
+Run this to check the queues:  `/usr/local/bin/rabbit_admin.sh list queues`
+
+Run this for checking the status:  `rabbitmqctl status`  The output is lots, but you will see when it errors.
+
+Run this for checking the cluster: `rabbitmqctl cluster_status`  This prints the configured cluster nodes and running nodes.
+
+
+
 ##### Documentation
 
 https://www.rabbitmq.com
