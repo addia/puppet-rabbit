@@ -238,7 +238,7 @@ Ensure the following ports are open and usable that is **network** and **selinux
 ##### Clustering and general troubleshooting
 
 Clustering is set-up automatically with a correct config and the correct network/selinux configuration.
-Should this not happening, read the excellent page from the RabbitMQ website.
+Should this not happen, it can be a painful process to find out what isn't correct. RabbitMQ has created an excellent page on their website.
 
 https://www.rabbitmq.com/clustering.html
 
