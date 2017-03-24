@@ -1,6 +1,6 @@
 {
   "name": "puppet-rabbit",
-  "version": "0.0.2",
+  "version": "2.0.0",
   "author": "LandRegistry, Addi Abel",
   "summary": "Installs, configures and manages RabbitMQ at Landregistry",
   "license": "MIT",
