@@ -4,7 +4,7 @@ A puppet module to manage the RabbitMQ install and configuration
 
 ## Requirements
 
-* Puppet  >=  3.4
+* A [Puppet](https://puppet.com/product/open-source-projects) Master server version 3.8.
 * The [stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib) Puppet library.
 * The [rabbitmq](https://forge.puppetlabs.com/puppetlabs/rabbitmq) Puppet Module RabbitMQ.
 * The [wget](https://forge.puppetlabs.com/maestrodev/wget) Puppet Module wget.
@@ -223,7 +223,29 @@ Verify return code: 0 (ok)
 When the puppet run fails to create the exchange and the queue, run puppet again with full debug and try to spot the error. If it is something like cert error or server name error you highly likely have a mistake in the hosts file, the DNS and the SUB_ALT names in the certificate. Check that all matches up correctly and if necessary revoke the certs and start again.
 
 
+##### Another part in the set-up is Firewalls and selinux.
 
+Ensure the following ports are open and usable that is **network** and **selinux**:
+```
+4369: epmd, a peer discovery service used by RabbitMQ nodes and CLI tools
+5672: used by AMQP 0-9-1 and 1.0 clients without TLS
+5671: used by AMQP 0-9-1 and 1.0 clients with TLS
+15671: used by rabbimqadmin with TLS
+25672: used by Erlang distribution for inter-node and CLI tools communication
+```
+
+
+##### Clustering and general troubleshooting
+
+Clustering is set-up automatically with a correct config and the correct network/selinux configuration.
+Should this not happening, read the excellent page from the RabbitMQ website.
+
+https://www.rabbitmq.com/clustering.html
+
+
+##### Documentation
+
+https://www.rabbitmq.com
 
 ### License
 
