@@ -204,7 +204,7 @@ class rabbit::config (
   }
 
   exec { 'Loading the cacert' :
-    command => "update-ca-trust",
+    command => 'update-ca-trust',
     creates => '/var/lib/rabbitmq/.caroot_done',
     path    => '/sbin:/bin:/usr/sbin:/usr/bin:/bin/:/sbin/',
   }
